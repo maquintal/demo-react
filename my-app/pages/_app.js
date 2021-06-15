@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyApp(props) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, router } = props;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -156,7 +156,12 @@ export default function MyApp(props) {
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0
+                ? <InboxIcon
+                    style={{backgroundColor: "purple" }}
+                    onClick={() => router.push("/card") }
+                  />
+                : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
