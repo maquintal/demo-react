@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 // import Link from '../src/Link';
 import Copyright from '../src/Copyright';
 
+import { connectToDatabase } from '../util/mongodb'
+
 export default function Index() {
   return (
     <Container maxWidth="sm">
@@ -21,4 +23,14 @@ export default function Index() {
       </Box>
     </Container>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { client } = await connectToDatabase()
+
+  const isConnected = await client.isConnected()
+
+  return {
+    props: { isConnected },
+  }
 }
