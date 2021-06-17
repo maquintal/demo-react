@@ -25,9 +25,9 @@ export default function BuildingForm() {
   return (
     <>
       <Container>
-        <Card>
-          <CardHeader title="5655 Elie, St-Hubert" />
-          <CardContent className={classes.root}>
+        <div>
+          <div title="5655 Elie, St-Hubert" />
+          <div className={classes.root}>
             <Grid container spacing={3}>
               <Grid item xs={2}>
                 <TextField fullWidth label="Numéro civic" variant="outlined" />
@@ -60,13 +60,13 @@ export default function BuildingForm() {
                 </Select>
               </Grid>
             </Grid>
-          </CardContent>
-          <CardActions spacing={2}>
+          </div>
+          <div spacing={2}>
               <Button variant="outlined" color="primary"> Sauvegarder</Button>
               <Button variant="outlined" color="primary"> Annuler</Button>
               <Button variant="outlined" color="secondary"> Supprimer</Button>
-          </CardActions>
-        </Card>
+          </div>
+        </div>
       </Container>
     </>
   );

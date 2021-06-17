@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import BuildingForm from "../src/building-form";
+import BuildingDialog from "../src/building-dialog";
 
-import { Card } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
@@ -17,13 +17,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Buildings() {
   const classes = useStyles();
+  const [openDialog, setOpenDialog] = React.useState(false);
+
   return (
     <>
         {/* button in bottom of the page */}
-      <Fab color="primary"  aria-label="add" className={classes.fab}>
+      <Fab color="primary"  aria-label="add" className={classes.fab} onClick={() => setOpenDialog(true)}>
         <AddIcon />
       </Fab>
-      <BuildingForm/>
+      <BuildingDialog
+        title="Si vide = Nouveau bâtiment. Sinon afficher le numero civique, la rue et la ville"
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+      >
+        <BuildingForm/>
+      </BuildingDialog>
     </>
   );
 }
