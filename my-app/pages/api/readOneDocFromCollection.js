@@ -1,8 +1,16 @@
+/*
+  Read Operations
+  Read operations retrieve documents from a collection; i.e. query a collection for documents.
+
+  This function with read Only ONE DOCUMENT from a specific collection
+
+ */
+
 import { connectToDatabase } from "../../util/mongodb";
 
 import { ObjectID } from "mongodb"
 
-const GetOneDocFromCollection = async (req, res) => {
+const ReadOneDocFromCollection = async (req, res) => {
   const { db } = await connectToDatabase();
 
   const id = req.query.id
@@ -16,4 +24,4 @@ const GetOneDocFromCollection = async (req, res) => {
   return res.json(tutorials);
 };
 
-export default GetOneDocFromCollection
+export default ReadOneDocFromCollection

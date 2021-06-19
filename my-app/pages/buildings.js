@@ -20,14 +20,14 @@ export default function Buildings() {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const [formState, setFormState] = React.useState({
+  const [formData, setFormData] = React.useState({
     civicNumber: "",
     street: "",
     city: "",
   })
 
   const handleChange = (event) => {
-    setFormState({...formState, [event.target.name]: event.target.value});
+    setFormData({...formData, [event.target.name]: event.target.value});
   };
 
   return (
@@ -43,7 +43,7 @@ export default function Buildings() {
       >
         <BuildingForm
           handleChange={handleChange}
-          formState={formState}
+          formData={formData}
         />
       </BuildingDialog>
     </>

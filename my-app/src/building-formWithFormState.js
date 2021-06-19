@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios"
 
 import {
   Container,
@@ -20,12 +21,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm({handleChange, formState}) {
+export default function BuildingForm({handleChange, formData}) {
   const classes = useStyles();
 
   React.useEffect(() => {
-    console.log(formState)
-  }, [formState])
+    console.log(formData)
+  }, [formData])
+
+  const handleSave = (formData) => {
+    // Send a POST request
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/createOneDocIntoCollection',
+      data: { data: formData }
+    });
+/*     fetch(`http://localhost:3000/api/createOneDocIntoCollection?data=${{formData}}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => console.log(data)); */
+  }
 
   return (
     <>
@@ -40,7 +58,7 @@ export default function BuildingForm({handleChange, formState}) {
                   label="Numéro civic"
                   name="civicNumber"
                   variant="outlined"
-                  value={formState.civicNumber}
+                  value={formData.civicNumber}
                   onChange={handleChange}
                 />
               </Grid>
@@ -50,7 +68,8 @@ export default function BuildingForm({handleChange, formState}) {
                   label="Rue"
                   name="street"
                   variant="outlined"
-                  value={formState.street}
+                  value={formData.street}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -59,7 +78,8 @@ export default function BuildingForm({handleChange, formState}) {
                   label="Ville"
                   name="city"
                   variant="outlined"
-                  value={formState.city}
+                  value={formData.city}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={2}>
@@ -86,7 +106,7 @@ export default function BuildingForm({handleChange, formState}) {
             </Grid>
           </div>
           <div spacing={2}>
-              <Button variant="outlined" color="primary"> Sauvegarder</Button>
+              <Button variant="outlined" color="primary" onClick={() => handleSave(formData)}> Sauvegarder</Button>
               <Button variant="outlined" color="primary"> Annuler</Button>
               <Button variant="outlined" color="secondary"> Supprimer</Button>
           </div>
