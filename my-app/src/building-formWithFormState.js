@@ -33,16 +33,9 @@ export default function BuildingForm({handleChange, formData}) {
     axios({
       method: 'post',
       url: 'http://localhost:3000/api/createOneDocIntoCollection',
-      data: { data: formData }
+      // data: { data: formData }
+      data: { formData: formData }
     });
-/*     fetch(`http://localhost:3000/api/createOneDocIntoCollection?data=${{formData}}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => console.log(data)); */
   }
 
   return (

@@ -11,11 +11,11 @@ import { connectToDatabase } from "../../util/mongodb";
 const CreateOneDocIntoCollection = async (req, res) => {
   const { db } = await connectToDatabase();
 
-  const data = req.body.data
+  const formData = req.body.formData
 
   const tutorials = await db
     .collection("tutorials")
-    .insertOne( {formData: data} )
+    .insertOne( {formData} )
 
   return res.json(tutorials);
 };
