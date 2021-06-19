@@ -1,6 +1,6 @@
 import { axios } from "axios"
 
-const Insert = () => {
+const FetchAll = () => {
 
   const DisplayBE = () => {
     fetch('http://localhost:3000/api/getAllDocsFromCollection', {
@@ -18,4 +18,4 @@ const Insert = () => {
   </>)
 }
 
-export default Insert
+export default FetchAll
