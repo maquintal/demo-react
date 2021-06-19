@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import BuildingForm from "../src/building-form";
+// import BuildingForm from "../src/building-form";
+import BuildingForm from "../src/building-formWithFormState";
 import BuildingDialog from "../src/building-dialog";
 
 import Fab from "@material-ui/core/Fab";
@@ -19,6 +20,16 @@ export default function Buildings() {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = React.useState(false);
 
+  const [formState, setFormState] = React.useState({
+    civicNumber: "",
+    street: "",
+    city: "",
+  })
+
+  const handleChange = (event) => {
+    setFormState({...formState, [event.target.name]: event.target.value});
+  };
+
   return (
     <>
         {/* button in bottom of the page */}
@@ -30,7 +41,10 @@ export default function Buildings() {
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
       >
-        <BuildingForm/>
+        <BuildingForm
+          handleChange={handleChange}
+          formState={formState}
+        />
       </BuildingDialog>
     </>
   );

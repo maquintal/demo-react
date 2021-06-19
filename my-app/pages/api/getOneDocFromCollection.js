@@ -5,7 +5,6 @@ import { ObjectID } from "mongodb"
 const GetOneDocFromCollection = async (req, res) => {
   const { db } = await connectToDatabase();
 
-  console.log(req.query)
   const id = req.query.id
 
   var objectId = new ObjectID(id);
