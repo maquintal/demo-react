@@ -39,7 +39,7 @@ export default function BuildingForm({handleChange, formData}) {
 
       axios({
         method: 'post',
-        url: 'http://localhost:3000/api/createOneDocIntoCollection',
+        url: 'http://localhost:3000/api/buildings/createOneBuilding',
         data: { formData: formData }
       }).then(async response => {
         if (response.status === 200) {

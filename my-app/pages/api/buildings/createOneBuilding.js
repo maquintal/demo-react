@@ -6,22 +6,20 @@
 
  */
 
-import { connectToDatabase } from "../../util/mongodb";
+import { connectToDatabase } from "../../../util/mongodb";
 
-import { ObjectID } from "mongodb"
+const CreateOneBuilding = async (req, res) => {
 
-const ReadOneDocFromCollection = async (req, res) => {
   const { db } = await connectToDatabase();
-
-  const id = req.query.id
-
-  var objectId = new ObjectID(id);
+  
+  const formData = req.body.formData
 
   const tutorials = await db
     .collection("tutorials")
-    .findOne({ _id: objectId })
+    .insertOne( {formData} )
 
   return res.json(tutorials);
+
 };
 
-export default ReadOneDocFromCollection
+export default CreateOneBuilding

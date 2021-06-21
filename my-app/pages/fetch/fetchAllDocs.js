@@ -3,7 +3,7 @@ import { axios } from "axios"
 const FetchAll = () => {
 
   const DisplayBE = () => {
-    fetch('http://localhost:3000/api/readAllDocsFromCollection', {
+    fetch('http://localhost:3000/api/buildings/readAllBuildings', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
