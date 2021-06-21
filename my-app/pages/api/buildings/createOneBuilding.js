@@ -6,11 +6,12 @@
 
  */
 
-import { connectToDatabase } from "../../util/mongodb";
+import { connectToDatabase } from "../../../util/mongodb";
 
-const CreateOneDocIntoCollection = async (req, res) => {
+const CreateOneBuilding = async (req, res) => {
+
   const { db } = await connectToDatabase();
-
+  
   const formData = req.body.formData
 
   const tutorials = await db
@@ -18,6 +19,7 @@ const CreateOneDocIntoCollection = async (req, res) => {
     .insertOne( {formData} )
 
   return res.json(tutorials);
+
 };
 
-export default CreateOneDocIntoCollection
+export default CreateOneBuilding

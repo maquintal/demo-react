@@ -7,7 +7,7 @@ const FetchOne = () => {
   const { id } = router.query
 
   const DisplayBE = () => {
-    fetch(`http://localhost:3000/api/readOneDocFromCollection?id=${id}`, {
+    fetch(`http://localhost:3000/api/buildings/readOneBuildingById?id=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

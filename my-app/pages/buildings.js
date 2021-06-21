@@ -44,6 +44,7 @@ export default function Buildings() {
         <BuildingForm
           handleChange={handleChange}
           formData={formData}
+          // handleSnackBar={handleSnackBar}
         />
       </BuildingDialog>
     </>

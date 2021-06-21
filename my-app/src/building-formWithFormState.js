@@ -15,6 +15,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import CustomizedSnackbars from "./snackbar";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -23,19 +25,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BuildingForm({handleChange, formData}) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState("");
+  const [snackMessage, setSnackMessage] = React.useState("")
 
   React.useEffect(() => {
     console.log(formData)
   }, [formData])
 
-  const handleSave = (formData) => {
+  const handleSave = async (formData) => {
+
     // Send a POST request
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/api/createOneDocIntoCollection',
-      // data: { data: formData }
-      data: { formData: formData }
+
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/api/buildings/createOneBuilding',
+        data: { formData: formData }
+      }).then(async response => {
+        if (response.status === 200) {
+          await setSeverity("success")
+          await setSnackMessage(`Record Created`)
+        }
+        console.log(response)
+    }).catch(async error => {
+      await setSeverity("error")
+      await setSnackMessage(`${error}`)
+      return (`${error}`)
     });
+
+    setOpen(true)
+
   }
 
   return (
@@ -99,12 +118,27 @@ export default function BuildingForm({handleChange, formData}) {
             </Grid>
           </div>
           <div spacing={2}>
-              <Button variant="outlined" color="primary" onClick={() => handleSave(formData)}> Sauvegarder</Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => handleSave(formData)}
+              >
+                Sauvegarder
+              </Button>
+
               <Button variant="outlined" color="primary"> Annuler</Button>
               <Button variant="outlined" color="secondary"> Supprimer</Button>
           </div>
         </div>
       </Container>
+      {open &&
+        <CustomizedSnackbars
+          openned={open}
+          severity={severity}
+          message={snackMessage}
+        />
+      || null}
+      
     </>
   );
 }
