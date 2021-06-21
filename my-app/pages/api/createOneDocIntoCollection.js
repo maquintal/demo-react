@@ -9,15 +9,29 @@
 import { connectToDatabase } from "../../util/mongodb";
 
 const CreateOneDocIntoCollection = async (req, res) => {
-  const { db } = await connectToDatabase();
 
-  const formData = req.body.formData
+  // try {
+    const { db } = await connectToDatabase();
+    
+    const formData = req.body.formData
 
-  const tutorials = await db
-    .collection("tutorials")
-    .insertOne( {formData} )
+    // try {
+      const tutorials = await db
+        .collection("tutorials")
+        .insertOnIe( {formData} )
 
-  return res.json(tutorials);
+        return res.json(tutorials);
+
+  //   } catch (error) {
+  //     console.log(`Opereation: Create FAILED: ${error}`)
+  //     return res
+  //   }
+
+  // } catch(error) {
+  //   console.log(`Connection to database FAILED: ${error}`)
+  //   return res
+  // }
+
 };
 
 export default CreateOneDocIntoCollection
