@@ -4,7 +4,7 @@ import { useController, useForm } from "react-hook-form";
 
 import {
   Input
-} from "./formComponents";
+} from "./FormComponents/formComponents";
 
 /* function Input({ control, name, label }) {
   const {

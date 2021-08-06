@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import BuildingForm from "../src/building-form";
-import BuildingForm from "../src/building-formWithFormState";
+import BuildingForm from "../src/building-form";
+// import BuildingForm from "../src/building-formWithFormState";
 import BuildingDialog from "../src/building-dialog";
 
 import Fab from "@material-ui/core/Fab";
