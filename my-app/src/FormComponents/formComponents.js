@@ -15,6 +15,7 @@ export function Input({ control, name, label }) {
 
   return (
     <TextField
+      fullWidth
       {...inputProps}
       inputRef={ref}
       variant={"outlined"}
