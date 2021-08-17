@@ -88,7 +88,6 @@ export default function BuildingForm(formData) {
 
   return (
     <>
-      <Container>
         <div>
           <div title="5655 Elie, St-Hubert" />
           <div className={classes.root}>
@@ -107,20 +106,20 @@ export default function BuildingForm(formData) {
                   <Input control={control} name="street" label="Rue" />
                 </Grid>
                 <Grid item xs={12}>
-                  <Input control={control} name="city" label="Numero Civic" />
+                  <Input control={control} name="city" label="Ville" />
                 </Grid>
                 <Grid item xs={6}>
                   <Input
                     control={control}
                     name="province"
-                    label="Numero Civic"
+                    label="Province"
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <Input
                     control={control}
                     name="zip_code"
-                    label="Numero Civic"
+                    label="Code Postal"
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -168,13 +167,13 @@ export default function BuildingForm(formData) {
                             label="Checkbox"
                           />
                         </Grid>
-                        <EmbeddedFieldArrayComponent
+                        {/* <EmbeddedFieldArrayComponent
                           control={control}
                           // name={`test.${index}.cb`}
                           // label="Checkbox"
                           index={index}
                           getValues={getValues}
-                        />
+                        /> */}
                       </Grid>
                     </Grid>
                   )
@@ -191,7 +190,7 @@ export default function BuildingForm(formData) {
             </form>
           </div>
           <div spacing={2}>
-            <Button
+            {/* <Button
               variant="outlined"
               color="primary"
               onClick={handleSubmit(handleSave)}
@@ -210,10 +209,9 @@ export default function BuildingForm(formData) {
             <Button variant="outlined" color="secondary" onClick={() => checkFormState()}>
               {" "}
               FormState
-            </Button>
+            </Button> */}
           </div>
         </div>
-      </Container>
       {open &&
         <CustomizedSnackbars
           openned={open}
