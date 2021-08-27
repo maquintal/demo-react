@@ -6,7 +6,7 @@
 
  */
 
-import { connectToDatabase } from "../../util/mongodb";
+import { connectToDatabase } from "../../../util/mongodb";
 
 const ReadAllBuildings = async (req, res) => {
   const { db } = await connectToDatabase();

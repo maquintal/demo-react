@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"
 import clsx from "clsx";
 import BuildingForm from "../src/building-form";
 // import BuildingForm from "../src/building-formWithFormState";
@@ -77,25 +78,25 @@ renderRow.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
-export default function Buildings() {
+const Buildings = ({ restaurants}) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openForm, setOpenForm] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
 
-  const [formData, setFormData] = React.useState({
+  /* const [formData, setFormData] = React.useState({
     civicNumber: "",
     street: "",
     city: "",
-  });
+  }); */
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleChange = (event) => {
+  /* const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
+  }; */
 
   const addNewBuilding = () => {
     setOpenForm(true);
@@ -107,6 +108,15 @@ export default function Buildings() {
 
   return (
     <>
+    {
+       <ul>
+       {restaurants.map(restaurant => (
+         <li key={restaurant._id}>
+           {restaurant._id}
+           {restaurant?.formData?.civicNumber}</li>
+       ))}
+     </ul>
+    }
       {/* button in bottom of the page */}
       <Fab
         color="primary"
@@ -140,20 +150,20 @@ export default function Buildings() {
                   </IconButton>
                 }
                 title="Ajouter un nouveau batiment"
-                // subheader="September 14, 2016"
+              // subheader="September 14, 2016"
               />
               <CardContent>
                 <BuildingForm
                   handleChange={handleChange}
                   formData={formData}
-                  // handleSnackBar={handleSnackBar}
+                // handleSnackBar={handleSnackBar}
                 />
               </CardContent>
               <CardActions>
                 <Button
                   variant="outlined"
                   color="primary"
-                  // onClick={handleSubmit(handleSave)}
+                // onClick={handleSubmit(handleSave)}
                 >
                   Sauvegarder
                 </Button>
@@ -345,3 +355,16 @@ export default function Buildings() {
     </>
   );
 }
+
+Buildings.getInitialProps = async ctx => {
+  try {
+    const res = await axios.get('http://localhost:3000/api/buildings/readAllBuildings');
+    console.log(res)
+    const restaurants = res.data;
+    return { restaurants };
+  } catch (error) {
+    return { error };
+  }
+};
+
+export default Buildings;
