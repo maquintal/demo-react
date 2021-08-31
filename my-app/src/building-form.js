@@ -190,7 +190,7 @@ export default function BuildingForm(formData) {
             </form>
           </div>
           <div spacing={2}>
-            {/* <Button
+            <Button
               variant="outlined"
               color="primary"
               onClick={handleSubmit(handleSave)}
@@ -209,7 +209,7 @@ export default function BuildingForm(formData) {
             <Button variant="outlined" color="secondary" onClick={() => checkFormState()}>
               {" "}
               FormState
-            </Button> */}
+            </Button>
           </div>
         </div>
       {open &&
