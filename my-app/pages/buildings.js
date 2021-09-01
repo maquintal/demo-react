@@ -68,27 +68,27 @@ const Buildings = ({ buildings }) => {
   const [openForm, setOpenForm] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
 
-  const [formData, setFormData] = React.useState({
+  /* const [formData, setFormData] = React.useState({
     civicNumber: "",
     street: "",
     city: "",
-  });
+  }); */
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleChange = (event) => {
+  /* const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
+  }; */
 
-  const addNewBuilding = () => {
+  /* const addNewBuilding = () => {
     setOpenForm(true);
-  };
+  }; */
 
-  const closeOpenedForm = () => {
+  /* const closeOpenedForm = () => {
     setOpenForm(false);
-  };
+  }; */
 
   return (
     <>
@@ -103,7 +103,7 @@ const Buildings = ({ buildings }) => {
       </Fab>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Button variant="outlined" onClick={addNewBuilding}>
+          <Button variant="outlined" /* onClick={addNewBuilding} */>
             Ajouter un immeuble
           </Button>
         </Grid>
@@ -129,7 +129,7 @@ const Buildings = ({ buildings }) => {
               />
               <CardContent>
                 <BuildingForm
-                  handleChange={handleChange}
+                  // handleChange={handleChange}
                   formData={formData}
                   // handleSnackBar={handleSnackBar}
                 />

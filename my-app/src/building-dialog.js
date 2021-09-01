@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BuildingDialog(props) {
-  const { title, children, openDialog, setOpenDialog } = props;
+  const { title, children, openDialog, handleClose /* , setOpenDialog */ } = props;
   const classes = useStyles();
   return (
     <div>
@@ -30,7 +30,7 @@ export default function BuildingDialog(props) {
             <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
               {title}
             </Typography>
-            <ActionButton color="secondary" onClick={() => setOpenDialog(false)}>
+            <ActionButton color="secondary" onClick={() => handleClose()}>
               <CloseIcon fontSize="large" />
             </ActionButton>
           </div>
