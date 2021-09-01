@@ -32,10 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BuildingForm({formData}) {
-
   console.log(formData)
 
   // pour valider que formData n<est pas empty, faire un react hook, je suggere useMemo (React.useMemo)
+  const object = useMemo(()=>{
+    return formData
+  }, [formData])
+
   
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: object
@@ -173,25 +176,10 @@ export default function BuildingForm({formData}) {
                             label="Checkbox"
                           />
                         </Grid>
-                        {/* <EmbeddedFieldArrayComponent
-                          control={control}
-                          // name={`test.${index}.cb`}
-                          // label="Checkbox"
-                          index={index}
-                          getValues={getValues}
-                        /> */}
                       </Grid>
                     </Grid>
                   )
                 })}
-                <Grid item xs={3}>
-                  <button
-                    type="button"
-                    onClick={() => append({ firstName: "appendBill", lastName: "appendLuo" })}
-                  >
-                    append
-                  </button>
-                </Grid>
               </Grid>
             </form>
           </div>
