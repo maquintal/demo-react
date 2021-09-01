@@ -19,9 +19,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingDialog(props) {
-  const { title, children, openDialog, handleClose /* , setOpenDialog */ } = props;
+export default function BuildingDialog({
+  title,
+  children,
+  openDialog,
+  handleClose
+  /* , setOpenDialog */
+}) {
+
   const classes = useStyles();
+
+  console.log(children)
+
   return (
     <div>
       <Dialog open={openDialog} maxWidth="md">

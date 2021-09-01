@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import axios from "axios"
 
 import {
@@ -31,9 +31,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm(formData) {
+export default function BuildingForm({formData}) {
 
-  const { control, handleSubmit, getValues } = useForm();
+  console.log(formData)
+
+  // pour valider que formData n<est pas empty, faire un react hook, je suggere useMemo (React.useMemo)
+  
+  const { control, handleSubmit, getValues } = useForm({
+    defaultValues: object
+  });
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("")

@@ -162,6 +162,7 @@ const BuildingCard = ({ building, classes }) => {
       >
         <BuildingForm
           // handleChange={handleChange}
+          buildingId={building._id}
           formData={formData}
           // handleSnackBar={handleSnackBar}
         />
