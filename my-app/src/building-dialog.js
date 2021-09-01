@@ -29,8 +29,6 @@ export default function BuildingDialog({
 
   const classes = useStyles();
 
-  console.log(children)
-
   return (
     <div>
       <Dialog open={openDialog} maxWidth="md">
