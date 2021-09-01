@@ -24,8 +24,17 @@ import clsx from "clsx";
 import { FixedSizeList } from "react-window";
 import PropTypes from "prop-types";
 
+import BuildingDialog from "../../building-dialog"
+import BuildingForm from "../../building-form";
+
 const BuildingCard = ({ building, classes }) => {
   const { formData } = building;
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
 
   return (
     <>
@@ -69,7 +78,7 @@ const BuildingCard = ({ building, classes }) => {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+            <IconButton aria-label="add to favorites" onClick={ () => setOpenDialog(true) }>
               <EditIcon />
             </IconButton>
             <IconButton aria-label="share" color="secondary">
@@ -145,6 +154,18 @@ const BuildingCard = ({ building, classes }) => {
           </CardContent>
         </Card>
       </Grid>
+      <BuildingDialog
+        title="Si vide = Nouveau bâtiment. Sinon afficher le numero civique, la rue et la ville"
+        openDialog={openDialog}
+        // setOpenDialog={setOpenDialog}
+        handleClose={handleClose}
+      >
+        <BuildingForm
+          // handleChange={handleChange}
+          formData={formData}
+          // handleSnackBar={handleSnackBar}
+        />
+      </BuildingDialog>
     </>
   );
 };
