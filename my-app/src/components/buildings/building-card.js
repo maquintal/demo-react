@@ -89,7 +89,10 @@ const BuildingCard = ({ building, classes }) => {
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm buildingId={building._id} formData={formData} />
+        <BuildingForm
+          buildingId={building._id}
+          formData={formData}
+        />
       </BuildingDialog>
     </>
   );
