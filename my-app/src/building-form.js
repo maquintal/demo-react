@@ -23,8 +23,6 @@ import { Checkbox1 } from "./FormComponents/CheckboxFormComponents";
 
 import CustomizedSnackbars from "./snackbar";
 
-import { EmbeddedFieldArrayComponent } from "./embeddedComp";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -33,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BuildingForm({buildingId, formData}) {
   
-  // console.log(buildingId)
-  // console.log(formData)
-
-  // pour valider que formData n<est pas empty, faire un react hook, je suggere useMemo (React.useMemo)
   const initialValue = useMemo(()=> {
 
     let initialObject = {}

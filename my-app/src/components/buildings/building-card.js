@@ -18,13 +18,21 @@ import EditIcon from "@material-ui/icons/Edit";
 import BuildingDialog from "../../building-dialog";
 import BuildingForm from "../../building-form";
 
+import AppartmentDialog from "../appartments/appartment-dialog";
+import AppartmentForm from "../appartments/appartment-form";
+
 const BuildingCard = ({ building, classes }) => {
   const { formData } = building;
 
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
 
   const handleClose = () => {
     setOpenDialog(false);
+  };
+
+  const handleCloseAppartmentDialog = () => {
+    setOpenAppartmentDialog(false);
   };
 
   return (
@@ -67,7 +75,10 @@ const BuildingCard = ({ building, classes }) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button variant="outlined">
+          <Button
+            variant="outlined"
+            onClick={() => setOpenAppartmentDialog(true)}
+          >
             <Typography variant="body2" color="textSecondary" component="p">
               Appartements
             </Typography>
@@ -84,16 +95,30 @@ const BuildingCard = ({ building, classes }) => {
         </CardActions>
         <CardContent></CardContent>
       </Card>
+
       <BuildingDialog
         title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm
-          buildingId={building._id}
-          formData={formData}
-        />
+        <BuildingForm buildingId={building._id} formData={formData} />
       </BuildingDialog>
+
+
+
+      <AppartmentDialog
+        // title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
+        title="test"
+        openDialog={openAppartmentDialog}
+        handleClose={handleCloseAppartmentDialog}
+      >
+        {/* 
+        ======================================
+        TO REFACTOR INTO COMPONENTS 
+        ======================================*/}
+        <AppartmentForm/>
+        
+      </AppartmentDialog>
     </>
   );
 };
