@@ -73,7 +73,7 @@ const Buildings = ({ buildings }) => {
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm buildingId={``} formData={{}} />
+        <BuildingForm buildingId={``} /* formData={{}} */ />
       </BuildingDialog>
     </>
   );
