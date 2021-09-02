@@ -22,13 +22,6 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  cardWrapper: {
-    display: flexbox,
-    justifyContent: "center",
-  }
 }));
 
 const Buildings = ({ buildings }) => {
@@ -57,12 +50,13 @@ const Buildings = ({ buildings }) => {
       <Grid container spacing={2} >
         {buildings?.map((building) => {
           return (
-            <Grid item xs={4} className={classes.cardWrapper}>
+            <Grid item xs={4} className={classes.cardWrapper} >
               <BuildingCard
                 building={building}
                 classes={classes}
                 expanded={expanded}
                 handleExpandClick={handleExpandClick}
+                key={building._id}
               />
             </Grid>
           );
