@@ -31,18 +31,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm({formData}) {
-  console.log(formData)
+export default function BuildingForm({buildingId, formData}) {
+  
+  // console.log(buildingId)
+  // console.log(formData)
 
   // pour valider que formData n<est pas empty, faire un react hook, je suggere useMemo (React.useMemo)
-  const object = useMemo(()=>{
-    return formData
+  const initialValue = useMemo(()=> {
+
+    let initialObject = {}
+    if (formData) {
+      initialObject = formData
+    }
+    
+    return initialObject
+
   }, [formData])
 
-  
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: object
+    defaultValues: initialValue
   });
+
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("")
