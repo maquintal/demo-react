@@ -10,10 +10,18 @@ import {
   Box,
   Grid,
   TextField,
+  Card,
+  CardContent,
+  CardHeader,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useForm, useFieldArray } from "react-hook-form";
 import PropTypes from "prop-types";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import { Input } from "../../FormComponents/formComponents";
+import ActionButton from "../ActionButton";
+import TenantForm from "./tenant-form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
+    height: "800px",
+    overflowY: 'scroll',
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -40,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   const classes = useStyles();
+
   return (
     <div
       role="tabpanel"
@@ -74,6 +85,16 @@ const AppartmentForm = (props) => {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
+  const { control, handleSubmit, getValues } = useForm({
+    // defaultValues: initialValue
+  });
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: "test", // unique name for your Field Array
+      // keyName: "id", default to "id", you can change the key name
+    }
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -104,9 +125,7 @@ const AppartmentForm = (props) => {
               <Tab label="Commentaires" /*{...a11yProps(2)}*/ />
             </Tabs>
             <TabPanel value={value} index={0} variant="scrollable">
-              <Grid container>
-                <Grid item xs={4} style={{ backgroundColor: "red" }}></Grid>
-              </Grid>
+              <TenantForm />
             </TabPanel>
             <TabPanel value={value} index={1}>
               Item Two

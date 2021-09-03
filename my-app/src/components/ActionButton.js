@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ActionButton(props) {
-  const { color, children, onClick } = props;
+  const { color,variant, children, onClick } = props;
   const classes = useStyles();
   return (
     <div>
-      <Button className={`${classes.root} ${classes[color]}`} onClick={onClick}>
+      <Button className={`${classes.root} ${classes[color]}`} variant={variant} onClick={onClick}>
         {children}
       </Button>
     </div>

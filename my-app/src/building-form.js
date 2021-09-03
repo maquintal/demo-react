@@ -145,7 +145,7 @@ export default function BuildingForm({buildingId, formData}) {
                 <Grid item xs={6}></Grid>
                 {fields.map((field, index) => {
                   return (
-                    <Grid item xs={12} key={`appMgmt-${index}`}>
+                    <Grid item xs={12} key={`${field}-${index}`}>
 
                       <Grid item>
                         <button type="button" onClick={() => remove(index)}>Delete</button>
