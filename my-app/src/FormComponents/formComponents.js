@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core";
 import { useController } from "react-hook-form";
 
-export function Input({ control, name, label }) {
+export function Input({ control, name, label, type }) {
   const {
     field: { ref, ...inputProps },
     fieldState: { invalid, isTouched, isDirty },
@@ -20,6 +20,7 @@ export function Input({ control, name, label }) {
       inputRef={ref}
       variant={"outlined"}
       label={label}
+      type={type}
     />
   )
 } 

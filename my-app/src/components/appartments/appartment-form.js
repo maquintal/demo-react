@@ -14,6 +14,7 @@ import {
   CardContent,
   CardHeader,
 } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, useFieldArray } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: "flex",
     height: "800px",
-    overflowY: 'scroll',
+    overflowY: "scroll",
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -124,11 +125,90 @@ const AppartmentForm = (props) => {
               <Tab label="Informations" /*{...a11yProps(1)}*/ />
               <Tab label="Commentaires" /*{...a11yProps(2)}*/ />
             </Tabs>
+            {/* panel content */}
             <TabPanel value={value} index={0} variant="scrollable">
               <TenantForm />
             </TabPanel>
-            <TabPanel value={value} index={1}>
-              Item Two
+            <TabPanel value={value} index={1} variant="scrollable">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Grid item xs={4}>
+                    <Typography component="h5" variant="h5">
+                      {" "}
+                      Grandeur de l'appartement
+                    </Typography>
+                    <Input
+                      control={control}
+                      // name={`tenant.${index}.lastname`}
+                      name="appartment_height"
+                      // label="Grandeur de l'appartement"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid item xs={4}>
+                    <Typography component="h5" variant="h5">
+                      {" "}
+                      Prix de l'appartement/mois
+                    </Typography>
+                    <Input
+                      control={control}
+                      // name={`tenant.${index}.lastname`}
+                      name="appartment_price"
+                      type="number"
+                      // label="Grandeur de l'appartement"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid item xs={4}>
+                    <Typography component="h5" variant="h5">
+                      {" "}
+                      Méthode de paiement
+                    </Typography>
+                    <Autocomplete
+                      id="combo-box-demo"
+                      options={paymentMethod}
+                      getOptionLabel={(option) => option.title}
+                      style={{ width: '100%' }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          // label="Combo box"
+                          variant="outlined"
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography component="h5" variant="h5">
+                    {" "}
+                    Début du Bail
+                  </Typography>
+                  <Input
+                    control={control}
+                    // name={`tenant.${index}.lastname`}
+                    name="appartment_start_bail"
+                    type="date"
+                    // label="Grandeur de l'appartement"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography component="h5" variant="h5">
+                    {" "}
+                    Fin du Bail
+                  </Typography>
+                  <Input
+                    control={control}
+                    // name={`tenant.${index}.lastname`}
+                    name="appartment_end_bail"
+                    type="date"
+                    // label="Grandeur de l'appartement"
+                  />
+                </Grid>
+              </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Grid container>
@@ -151,5 +231,11 @@ const AppartmentForm = (props) => {
     </div>
   );
 };
+
+const paymentMethod = [
+  { title: "Chèque", year: 1994 },
+  { title: "Argent", year: 1994 },
+  { title: "Virement Automatique", year: 1994 },
+];
 
 export default AppartmentForm;
