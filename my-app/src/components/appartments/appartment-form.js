@@ -10,11 +10,12 @@ import {
   Box,
   Grid,
   TextField,
+  Badge,
   Card,
   CardContent,
   CardHeader,
 } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, useFieldArray } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -23,6 +24,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Input } from "../../FormComponents/formComponents";
 import ActionButton from "../ActionButton";
 import TenantForm from "./tenant-form";
+import FormattedNumberInput from "../../FormComponents/Formated Input/Number";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,13 +77,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-// function a11yProps(index) {
-//   return {
-//     id: `vertical-tab-${index}`,
-//     "aria-controls": `vertical-tabpanel-${index}`,
-//   };
-// }
-
 const AppartmentForm = (props) => {
   const classes = useStyles();
 
@@ -109,7 +104,11 @@ const AppartmentForm = (props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>#100</Typography>
+          <Typography className={classes.heading}>
+            <Badge badgeContent={4} color="primary" variant="dot">
+              #100
+            </Badge>
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.tabsRoot}>
@@ -122,8 +121,27 @@ const AppartmentForm = (props) => {
               className={classes.tabs}
             >
               <Tab label="Locataires" /*{...a11yProps(0)}*/ />
-              <Tab label="Informations" /*{...a11yProps(1)}*/ />
-              <Tab label="Commentaires" /*{...a11yProps(2)}*/ />
+              <Tab
+                label={
+                  <Badge badgeContent={4} color="primary" variant="dot">
+                    Informations
+                  </Badge>
+                }
+              />
+              <Tab
+                label={
+                  <Badge badgeContent={4} color="primary" variant="dot">
+                    Finance
+                  </Badge>
+                }
+              />
+              <Tab
+                label={
+                  <Badge badgeContent={4} color="primary" variant="dot">
+                    Commentaires
+                  </Badge>
+                }
+              />
             </Tabs>
             {/* panel content */}
             <TabPanel value={value} index={0} variant="scrollable">
@@ -149,28 +167,13 @@ const AppartmentForm = (props) => {
                   <Grid item xs={4}>
                     <Typography component="h5" variant="h5">
                       {" "}
-                      Prix de l'appartement/mois
-                    </Typography>
-                    <Input
-                      control={control}
-                      // name={`tenant.${index}.lastname`}
-                      name="appartment_price"
-                      type="number"
-                      // label="Grandeur de l'appartement"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid item xs={4}>
-                    <Typography component="h5" variant="h5">
-                      {" "}
                       Méthode de paiement
                     </Typography>
                     <Autocomplete
                       id="combo-box-demo"
                       options={paymentMethod}
                       getOptionLabel={(option) => option.title}
-                      style={{ width: '100%' }}
+                      style={{ width: "100%" }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -211,6 +214,51 @@ const AppartmentForm = (props) => {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Grid item xs={4}>
+                    <Typography component="h5" variant="h5">
+                      {" "}
+                      Prix de l'appartement/mois
+                    </Typography>
+                    <FormattedNumberInput
+                      control={control}
+                      name="appartment_price"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box mt={5}>
+                    <Typography component="h5" variant="h5">
+                      {" "}
+                      Reconduction du Bail
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Input
+                    control={control}
+                    name="reconduction_per_percentage"
+                    label="reconduction en %"
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Input
+                    control={control}
+                    name="reconduction_per_price"
+                    label="reconduction en $"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                    <FormattedNumberInput
+                      control={control}
+                      name="appartment_price_after_reconduction"
+                      label="Prix après reconduction"
+                    />
+                  </Grid>
+              </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={3}>
               <Grid container>
                 <Grid item xs={12}>
                   <TextField

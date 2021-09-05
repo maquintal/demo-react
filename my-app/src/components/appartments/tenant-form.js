@@ -19,6 +19,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { Input } from "../../FormComponents/formComponents";
 import ActionButton from "../ActionButton";
 import CloseIcon from "@material-ui/icons/Close";
+import FormattedPhoneNumberInput from "../../FormComponents/Formated Input/PhoneNumber";
 
 const useStyles = makeStyles((theme) => ({
   cardHeaderWrapper: {
@@ -49,7 +50,7 @@ const TenantForm = () => {
         <ActionButton variant="outlined" onClick={() => append({})}>
           <Typography component={"p"}>Ajouter un locataire</Typography>
         </ActionButton>
-        <ActionButton variant="outlined" onClick={() => console.log('save')}>
+        <ActionButton variant="outlined" onClick={() => console.log("save")}>
           <Typography component={"p"}>Sauvegarder</Typography>
         </ActionButton>
         <ActionButton variant="outlined" onClick={() => checkFormState()}>
@@ -93,14 +94,14 @@ const TenantForm = () => {
                       />
                     </Grid>
                     <Grid item xs={4}>
-                      <Input
+                      <FormattedPhoneNumberInput
                         control={control}
                         name={`tenant.${index}.phone_number1`}
-                        label="Numéro de téléphone"
+                        label="numéro de téléphone"
                       />
                     </Grid>
                     <Grid item xs={4}>
-                      <Input
+                      <FormattedPhoneNumberInput
                         control={control}
                         name={`tenant.${index}.phone_number2`}
                         label="Second Numéro de téléphone"
