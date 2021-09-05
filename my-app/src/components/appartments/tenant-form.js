@@ -18,15 +18,14 @@ import { useForm, useFieldArray } from "react-hook-form";
 
 import { Input } from "../../FormComponents/formComponents";
 import ActionButton from "../ActionButton";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
-    cardHeaderWrapper: {
-      display: "flex",
-      justifyContent: "flex-end"
-    },
-  }));
-  
+  cardHeaderWrapper: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+}));
 
 const TenantForm = () => {
   const { control, handleSubmit, getValues } = useForm({
@@ -46,14 +45,17 @@ const TenantForm = () => {
   const classes = useStyles();
   return (
     <>
-      {/* <Box mb={2}> */}
-      <ActionButton variant="outlined" onClick={() => append({})}>
-        <Typography component={"p"}>Ajouter un locataire</Typography>
-      </ActionButton>
-      <ActionButton variant="outlined" onClick={() => checkFormState()}>
-        <Typography component={"p"}>FormState</Typography>
-      </ActionButton>
-      {/* </Box> */}
+      <Box mb={2} display="flex">
+        <ActionButton variant="outlined" onClick={() => append({})}>
+          <Typography component={"p"}>Ajouter un locataire</Typography>
+        </ActionButton>
+        <ActionButton variant="outlined" onClick={() => console.log('save')}>
+          <Typography component={"p"}>Sauvegarder</Typography>
+        </ActionButton>
+        <ActionButton variant="outlined" onClick={() => checkFormState()}>
+          <Typography component={"p"}>FormState</Typography>
+        </ActionButton>
+      </Box>
       <form>
         {fields.map((field, index) => {
           return (
@@ -71,7 +73,7 @@ const TenantForm = () => {
                       <ActionButton
                         color="secondary"
                         variant="outlined"
-                        onClick={() => remove(index)} 
+                        onClick={() => remove(index)}
                       >
                         <CloseIcon fontSize="small" />
                       </ActionButton>
