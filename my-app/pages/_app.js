@@ -23,8 +23,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import BusinessIcon from '@material-ui/icons/Business';
+
+// REDUX
 import { Provider } from 'react-redux'
-import { useStore } from "../util/store"
+import { store } from "../src/store"
 
 const drawerWidth = 240;
 
@@ -88,8 +90,6 @@ const useStyles = makeStyles((theme) => ({
 export default function MyApp(props) {
   const { Component, pageProps, router } = props;
 
-  const store = useStore(pageProps.initialReduxState)
-  
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
