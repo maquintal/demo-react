@@ -11,7 +11,7 @@ import {
 } from "./FormComponents/formComponents";
 
 // REDUX
-import { chooseCivicNumber, setForm } from "../src/store/rootSlice"
+import { setFormDemo } from "../src/store/rootSlice"
 
 const ReactHookFormDemo = () => {
   const { control, handleSubmit } = useForm();
@@ -21,7 +21,7 @@ const ReactHookFormDemo = () => {
 
   const onSubmit = (data) => {
     console.log(data)
-    dispatch(setForm(data.demo))
+    dispatch(setFormDemo(data.demo))
     console.log(state)
   }
 
