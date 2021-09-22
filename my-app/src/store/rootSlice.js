@@ -4,9 +4,9 @@ const rootSlice = createSlice({
   name: "root",
   initialState: {
     demo: {
-      civicNumber: "",
-      city: "",
-      street: "",
+      civicNumber: "334",
+      city: "St-Amable",
+      street: "Monseigneur-Coderre",
     }
   },
   reducers: {

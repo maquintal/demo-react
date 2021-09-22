@@ -14,10 +14,17 @@ import {
 import { setFormDemo } from "../src/store/rootSlice"
 
 const ReactHookFormDemo = () => {
-  const { control, handleSubmit } = useForm();
-
+  
   const dispatch = useDispatch()
-  const state = useSelector(state => state.demo)
+  const state = useSelector(state => state)
+
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      demo: state.demo /* {
+        civicNumber: state.demo.civicNumber
+      } */
+    }
+  });
 
   const onSubmit = (data) => {
     console.log(data)
