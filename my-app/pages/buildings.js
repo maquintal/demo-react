@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
 import BuildingCard from "../src/components/buildings/building-card";
@@ -9,6 +9,10 @@ import { red } from "@material-ui/core/colors";
 
 import { makeStyles, Grid, Button } from "@material-ui/core";
 import { flexbox } from "@material-ui/system";
+
+// redux
+import { useDispatch, useSelector } from "react-redux"
+import { getBuildings } from "../src/store/rootSlice"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,8 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Buildings = ({ buildings }) => {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
   const [expanded, setExpanded] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+
+  useEffect(() => {
+    dispatch(getBuildings(buildings))
+  }, [state.buildings])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -48,9 +58,9 @@ const Buildings = ({ buildings }) => {
       </Grid>
 
       <Grid container spacing={2} >
-        {buildings?.map((building) => {
+        {state.buildings?.map((building, index) => {
           return (
-            <Grid item xs={4} className={classes.cardWrapper} >
+            <Grid item xs={4} className={classes.cardWrapper} key={index}>
               <BuildingCard
                 building={building}
                 classes={classes}
@@ -78,7 +88,6 @@ Buildings.getInitialProps = async (ctx) => {
     const res = await axios.get(
       "http://localhost:3000/api/buildings/readAllBuildings"
     );
-    console.log(res);
     const buildings = res.data;
     return { buildings };
   } catch (error) {

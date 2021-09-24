@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import {
   Card,
   CardActions,
@@ -35,9 +36,30 @@ const BuildingCard = ({ building, classes }) => {
     setOpenAppartmentDialog(false);
   };
 
+  const deleteOneBuildingById = async (id) => {
+    // Send a POST request
+    axios({
+      method: "delete",
+      url: "http://localhost:3000/api/buildings/deleteOneBuilding",
+      data: { id: id },
+    })
+      .then(async (response) => {
+        if (response.status === 200) {
+          // await setSeverity("success");
+          // await setSnackMessage(`Record Created`);
+        }
+        console.log('response ', response);
+      })
+      .catch(async (error) => {
+        // await setSeverity("error");
+        // await setSnackMessage(`${error}`);
+        return `${error}`;
+      });
+  };
+
   return (
     <>
-      <Card className={classes.root} key={building?._id}>
+      <Card className={classes.root}>
         <CardHeader
           avatar={
             <Avatar
@@ -89,7 +111,11 @@ const BuildingCard = ({ building, classes }) => {
           >
             <EditIcon />
           </IconButton>
-          <IconButton aria-label="share" color="secondary">
+          <IconButton
+            aria-label="share"
+            color="secondary"
+            onClick={() => deleteOneBuildingById(building._id)}
+          >
             <DeleteIcon />
           </IconButton>
         </CardActions>
@@ -104,8 +130,6 @@ const BuildingCard = ({ building, classes }) => {
         <BuildingForm buildingId={building._id} formData={formData} />
       </BuildingDialog>
 
-
-
       <AppartmentDialog
         // title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
         title="test"
@@ -116,8 +140,7 @@ const BuildingCard = ({ building, classes }) => {
         ======================================
         TO REFACTOR INTO COMPONENTS 
         ======================================*/}
-        <AppartmentForm/>
-        
+        <AppartmentForm />
       </AppartmentDialog>
     </>
   );
