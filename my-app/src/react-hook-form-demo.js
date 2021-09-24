@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux"
 
 // UI
@@ -11,12 +12,17 @@ import {
 } from "./FormComponents/formComponents";
 
 // REDUX
-import { setFormDemo } from "../src/store/rootSlice"
+import { setFormDemo, jusDePeche } from "../src/store/rootSlice"
 
-const ReactHookFormDemo = () => {
-  
+const ReactHookFormDemo = ({buildings}) => {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
+  const selectedBuilding = state.selectedBuilding
+
+  // console.log(buildings, 'buildings');
+  // useEffect(() => {
+  //   dispatch(jusDePeche(buildings));
+  // }, [])
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -29,10 +35,10 @@ const ReactHookFormDemo = () => {
   const onSubmit = (data) => {
     console.log(data)
     dispatch(setFormDemo(data.demo))
-    console.log(state)
+    // console.log('state1', state)
   }
 
-  console.log(state)
+  // console.log('state2', state)
   return (
     <form>
       <Grid container>
@@ -72,4 +78,5 @@ const ReactHookFormDemo = () => {
   )
 }
 
-export default ReactHookFormDemo
+
+export default ReactHookFormDemo;
