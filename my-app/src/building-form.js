@@ -38,7 +38,8 @@ export default function BuildingForm() {
   const state = useSelector(state => state)
 
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: state?.selectedBuilding?.formData || {}
+    reValidateMode: 'onChange',
+    defaultValues: state?.selectedBuilding?.buildingInfo || {}
   });
 
   const [open, setOpen] = React.useState(false);
@@ -70,29 +71,28 @@ export default function BuildingForm() {
   }
 
   const handleSave = async (formData) => {
-    console.log(state.selectedBuilding)
+    
     // try {
     //   dispatch(setSelectedBuilding(formData))
     // } catch (error) {
     //   throw new Error(error)
     // }
-    // console.log(state.selectedBuilding.formData)
-    // // Send a POST request
-    // axios({
-    //   method: 'post',
-    //   url: 'http://localhost:3000/api/buildings/createOneBuilding',
-    //   data: { formData: formData }
-    // }).then(async response => {
-    //   if (response.status === 200) {
-    //     await setSeverity("success")
-    //     await setSnackMessage(`Record Created`)
-    //   }
-    //   console.log(response)
-    // }).catch(async error => {
-    //   await setSeverity("error")
-    //   await setSnackMessage(`${error}`)
-    //   return (`${error}`)
-    // });
+    // Send a POST request
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/buildings/createOneBuilding',
+      data: { buildingFormData: formData }
+    }).then(async response => {
+      if (response.status === 200) {
+        await setSeverity("success")
+        await setSnackMessage(`Record Created`)
+      }
+      console.log(response)
+    }).catch(async error => {
+      await setSeverity("error")
+      await setSnackMessage(`${error}`)
+      return (`${error}`)
+    });
 
     setOpen(true)
 
@@ -110,6 +110,7 @@ export default function BuildingForm() {
                     control={control}
                     name="civicNumber"
                     label="Numero Civic"
+                    rules={{required: true}}
                   />
                 </Grid>
               </Grid>

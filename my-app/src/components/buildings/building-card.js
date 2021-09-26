@@ -27,7 +27,7 @@ import AppartmentForm from "../appartments/appartment-form";
 import { setSelectedBuilding } from "../../store/rootSlice"
 
 const BuildingCard = ({ building, classes }) => {
-  const { formData } = building;
+  const { buildingInfo } = building;
   
   const dispatch = useDispatch()
 
@@ -79,8 +79,8 @@ const BuildingCard = ({ building, classes }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
-          subheader={`${formData.rental_agent}`}
+          title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
+          subheader={`${buildingInfo.rental_agent}`}
         />
         <CardMedia
           className={classes.media}
@@ -129,7 +129,7 @@ const BuildingCard = ({ building, classes }) => {
       </Card>
 
       <BuildingDialog
-        title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
+        title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
         openDialog={openDialog}
         handleClose={handleClose}
       >
@@ -137,7 +137,7 @@ const BuildingCard = ({ building, classes }) => {
       </BuildingDialog>
 
       <AppartmentDialog
-        // title={`${formData.civicNumber} ${formData.street}, ${formData.city}, ${formData.zip_code}`}
+        // title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
         title="test"
         openDialog={openAppartmentDialog}
         handleClose={handleCloseAppartmentDialog}
