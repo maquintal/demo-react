@@ -12,7 +12,6 @@ const rootSlice = createSlice({
     selectedBuilding: {}
   },
   reducers: {
-    // chooseCivicNumber: (state, action) => { state.civicNumber = action.payload },
     setFormDemo: (state, action) => { state.demo = action.payload },
     getBuildings: (state, action) => {state.buildings = action.payload},
     setSelectedBuilding: (state, action) => { state.selectedBuilding = action.payload },

@@ -24,7 +24,7 @@ import { Checkbox1 } from "./FormComponents/CheckboxFormComponents";
 
 import CustomizedSnackbars from "./snackbar";
 
-import { setSelectedBuilding } from "../src/store/rootSlice"
+import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../src/store/rootSlice"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,27 +72,32 @@ export default function BuildingForm() {
 
   const handleSave = async (formData) => {
     
-    // try {
-    //   dispatch(setSelectedBuilding(formData))
-    // } catch (error) {
-    //   throw new Error(error)
-    // }
+    try {
+      dispatch(setSelectedBuildingBuildingInfo(formData))
+    } catch (error) {
+      throw new Error(error)
+    }
+
+    // apres avoir modifié le state ou cé qu'on fait la mutation, dans le Reducer !?
+    // option 2, ne pas modifié le state, et faire la mutation, pcq anyway le state va se mettre a jour apres
+    // par contre, un save doit absolument se faire avant de changer de page.... TBD
+
     // Send a POST request
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/api/buildings/createOneBuilding',
-      data: { buildingFormData: formData }
-    }).then(async response => {
-      if (response.status === 200) {
-        await setSeverity("success")
-        await setSnackMessage(`Record Created`)
-      }
-      console.log(response)
-    }).catch(async error => {
-      await setSeverity("error")
-      await setSnackMessage(`${error}`)
-      return (`${error}`)
-    });
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:3000/api/buildings/createOneBuilding',
+    //   data: { buildingFormData: formData }
+    // }).then(async response => {
+    //   if (response.status === 200) {
+    //     await setSeverity("success")
+    //     await setSnackMessage(`Record Created`)
+    //   }
+    //   console.log(response)
+    // }).catch(async error => {
+    //   await setSeverity("error")
+    //   await setSnackMessage(`${error}`)
+    //   return (`${error}`)
+    // });
 
     setOpen(true)
 
