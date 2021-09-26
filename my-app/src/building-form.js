@@ -38,7 +38,7 @@ export default function BuildingForm() {
   const state = useSelector(state => state)
 
   const { control, handleSubmit, getValues } = useForm({
-    reValidateMode: 'onChange',
+    reValidateMode: 'onSubmit',
     defaultValues: state?.selectedBuilding?.buildingInfo || {}
   });
 
@@ -115,7 +115,7 @@ export default function BuildingForm() {
                     control={control}
                     name="civicNumber"
                     label="Numero Civic"
-                    rules={{required: true}}
+                    rules={ {required: "Veuillez entrer un numéro civique"} }
                   />
                 </Grid>
               </Grid>
