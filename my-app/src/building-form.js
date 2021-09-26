@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm({ building /* buildingId, formData */ }) {
+export default function BuildingForm({ /* buildingId, formData */ }) {
 
   const dispatch = useDispatch()
   const state = useSelector(state => state)
@@ -48,20 +48,8 @@ export default function BuildingForm({ building /* buildingId, formData */ }) {
 
   // }, [formData])
 
-  React.useEffect(() => {
-    if (building) {
-      dispatch(setSelectedBuilding(building))
-    }
-  }, [])
-
-  const selectedBuilding = React.useMemo(() => {
-    if (state.selectedBuilding) {
-      return state.selectedBuilding
-    }
-  }, [state])
-
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: selectedBuilding.formData
+    defaultValues: state?.selectedBuilding?.formData || {}
   });
 
   const [open, setOpen] = React.useState(false);
@@ -93,22 +81,28 @@ export default function BuildingForm({ building /* buildingId, formData */ }) {
   }
 
   const handleSave = async (formData) => {
-    // Send a POST request
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/api/buildings/createOneBuilding',
-      data: { formData: formData }
-    }).then(async response => {
-      if (response.status === 200) {
-        await setSeverity("success")
-        await setSnackMessage(`Record Created`)
-      }
-      console.log(response)
-    }).catch(async error => {
-      await setSeverity("error")
-      await setSnackMessage(`${error}`)
-      return (`${error}`)
-    });
+    try {
+      dispatch(setSelectedBuilding(formData))
+    } catch (error) {
+      throw new Error(error)
+    }
+    console.log(state.selectedBuilding.formData)
+    // // Send a POST request
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:3000/api/buildings/createOneBuilding',
+    //   data: { formData: formData }
+    // }).then(async response => {
+    //   if (response.status === 200) {
+    //     await setSeverity("success")
+    //     await setSnackMessage(`Record Created`)
+    //   }
+    //   console.log(response)
+    // }).catch(async error => {
+    //   await setSeverity("error")
+    //   await setSnackMessage(`${error}`)
+    //   return (`${error}`)
+    // });
 
     setOpen(true)
 
@@ -206,8 +200,7 @@ export default function BuildingForm({ building /* buildingId, formData */ }) {
             <Button
               variant="outlined"
               color="primary"
-              // onClick={handleSubmit(handleSave)}
-              onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit(handleSave)}
             >
               {" "}
               Sauvegarder
