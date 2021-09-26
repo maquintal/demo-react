@@ -133,7 +133,7 @@ const BuildingCard = ({ building, classes }) => {
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm building={building} /* buildingId={building._id} formData={formData} */ />
+        <BuildingForm building={building} />
       </BuildingDialog>
 
       <AppartmentDialog
