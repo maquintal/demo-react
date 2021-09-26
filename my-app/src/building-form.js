@@ -36,6 +36,7 @@ export default function BuildingForm({ /* buildingId, formData */ }) {
 
   const dispatch = useDispatch()
   const state = useSelector(state => state)
+  const [initialFormValues] = React.useState(state?.selectedBuilding?.formData || {})
 
   // const initialValue = useMemo(()=> {
 
@@ -48,8 +49,12 @@ export default function BuildingForm({ /* buildingId, formData */ }) {
 
   // }, [formData])
 
+  React.useEffect(() => {
+    dispatch(setSelectedBuilding(initialFormValues))
+  }, [])
+
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: state?.selectedBuilding?.formData || {}
+    defaultValues: initialFormValues
   });
 
   const [open, setOpen] = React.useState(false);
