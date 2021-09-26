@@ -36,14 +36,9 @@ export default function BuildingForm() {
 
   const dispatch = useDispatch()
   const state = useSelector(state => state)
-  const [initialFormValues] = React.useState(state?.selectedBuilding?.formData || {})
-
-  React.useEffect(() => {
-    dispatch(setSelectedBuilding(initialFormValues))
-  }, [])
 
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: initialFormValues
+    defaultValues: state?.selectedBuilding?.formData || {}
   });
 
   const [open, setOpen] = React.useState(false);
@@ -75,12 +70,13 @@ export default function BuildingForm() {
   }
 
   const handleSave = async (formData) => {
-    try {
-      dispatch(setSelectedBuilding(formData))
-    } catch (error) {
-      throw new Error(error)
-    }
-    console.log(state.selectedBuilding.formData)
+    console.log(state.selectedBuilding)
+    // try {
+    //   dispatch(setSelectedBuilding(formData))
+    // } catch (error) {
+    //   throw new Error(error)
+    // }
+    // console.log(state.selectedBuilding.formData)
     // // Send a POST request
     // axios({
     //   method: 'post',

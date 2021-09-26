@@ -12,7 +12,7 @@ import { flexbox } from "@material-ui/system";
 
 // redux
 import { useDispatch, useSelector } from "react-redux"
-import { getBuildings } from "../src/store/rootSlice"
+import { getBuildings, setSelectedBuilding } from "../src/store/rootSlice"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +51,7 @@ const Buildings = ({ buildings }) => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Button variant="outlined" onClick={() => setOpenDialog(true)}>
+          <Button variant="outlined" onClick={() => { dispatch(setSelectedBuilding({})); setOpenDialog(true) }}>
             Ajouter un immeuble
           </Button>
         </Grid>
