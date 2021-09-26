@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
 
 import {
   Container,
@@ -23,27 +24,44 @@ import { Checkbox1 } from "./FormComponents/CheckboxFormComponents";
 
 import CustomizedSnackbars from "./snackbar";
 
+import { setSelectedBuilding } from "../src/store/rootSlice"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
 }));
 
-export default function BuildingForm({buildingId, formData}) {
-  
-  const initialValue = useMemo(()=> {
+export default function BuildingForm({ building /* buildingId, formData */ }) {
 
-    let initialObject = {}
-    if (formData) {
-      initialObject = formData
-    }
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
+
+  // const initialValue = useMemo(()=> {
+
+  //   let initialObject = {}
+  //   if (formData) {
+  //     initialObject = formData
+  //   }
     
-    return initialObject
+  //   return initialObject
 
-  }, [formData])
+  // }, [formData])
+
+  React.useEffect(() => {
+    if (building) {
+      dispatch(setSelectedBuilding(building))
+    }
+  }, [])
+
+  const selectedBuilding = React.useMemo(() => {
+    if (state.selectedBuilding) {
+      return state.selectedBuilding
+    }
+  }, [state])
 
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: initialValue
+    defaultValues: selectedBuilding.formData
   });
 
   const [open, setOpen] = React.useState(false);
@@ -65,16 +83,14 @@ export default function BuildingForm({buildingId, formData}) {
   ]
 
   const onSubmit = (data) => {
-    console.log(data)
+    // console.log(data)
+    dispatch(setSelectedBuilding(data))
   };
 
   const checkFormState = () => {
     const values = getValues();
     console.log(values)
   }
-
-  React.useEffect(() => {
-  }, [formData])
 
   const handleSave = async (formData) => {
     // Send a POST request
@@ -190,7 +206,8 @@ export default function BuildingForm({buildingId, formData}) {
             <Button
               variant="outlined"
               color="primary"
-              onClick={handleSubmit(handleSave)}
+              // onClick={handleSubmit(handleSave)}
+              onClick={handleSubmit(onSubmit)}
             >
               {" "}
               Sauvegarder
