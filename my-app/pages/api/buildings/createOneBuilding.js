@@ -12,11 +12,11 @@ const CreateOneBuilding = async (req, res) => {
 
   const { db } = await connectToDatabase();
   
-  const formData = req.body.formData
+  const buildingInfo = req.body.buildingFormData
 
   const tutorials = await db
     .collection("tutorials")
-    .insertOne( {formData} )
+    .insertOne( {buildingInfo} )
 
   return res.json(tutorials);
 
