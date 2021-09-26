@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import { useDispatch } from "react-redux"
+
 import {
   Card,
   CardActions,
@@ -22,8 +24,12 @@ import BuildingForm from "../../building-form";
 import AppartmentDialog from "../appartments/appartment-dialog";
 import AppartmentForm from "../appartments/appartment-form";
 
+import { setSelectedBuilding } from "../../store/rootSlice"
+
 const BuildingCard = ({ building, classes }) => {
   const { formData } = building;
+  
+  const dispatch = useDispatch()
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
@@ -107,7 +113,7 @@ const BuildingCard = ({ building, classes }) => {
           </Button>
           <IconButton
             aria-label="add to favorites"
-            onClick={() => setOpenDialog(true)}
+            onClick={() => { dispatch(setSelectedBuilding(building)); setOpenDialog(true) }}
           >
             <EditIcon />
           </IconButton>
