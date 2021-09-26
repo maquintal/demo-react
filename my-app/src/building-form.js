@@ -32,22 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm({ /* buildingId, formData */ }) {
+export default function BuildingForm() {
 
   const dispatch = useDispatch()
   const state = useSelector(state => state)
   const [initialFormValues] = React.useState(state?.selectedBuilding?.formData || {})
-
-  // const initialValue = useMemo(()=> {
-
-  //   let initialObject = {}
-  //   if (formData) {
-  //     initialObject = formData
-  //   }
-    
-  //   return initialObject
-
-  // }, [formData])
 
   React.useEffect(() => {
     dispatch(setSelectedBuilding(initialFormValues))
