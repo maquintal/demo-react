@@ -9,7 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import ActionButton from "../src/components/ActionButton";
+import ActionButton from "../ActionButton";
 
 import CloseIcon from '@material-ui/icons/Close';
 

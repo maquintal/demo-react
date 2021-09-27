@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import axios from "axios";
 
 import BuildingCard from "../src/components/buildings/building-card";
-import BuildingDialog from "../src/building-dialog";
-import BuildingForm from "../src/building-form";
+import BuildingDialog from "../src/components/buildings/building-dialog"
+import BuildingForm from "../src/components/buildings/building-form";
 
-import { red } from "@material-ui/core/colors";
+// import { red } from "@material-ui/core/colors";
 
 import { makeStyles, Grid, Button } from "@material-ui/core";
-import { flexbox } from "@material-ui/system";
+// import { flexbox } from "@material-ui/system";
 
 // redux
 import { useDispatch, useSelector } from "react-redux"

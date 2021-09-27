@@ -18,8 +18,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-import BuildingDialog from "../../building-dialog";
-import BuildingForm from "../../building-form";
+import BuildingDialog from "../buildings/building-dialog"
+import BuildingForm from "../buildings/building-form";
 
 import AppartmentDialog from "../appartments/appartment-dialog";
 import AppartmentForm from "../appartments/appartment-form";
