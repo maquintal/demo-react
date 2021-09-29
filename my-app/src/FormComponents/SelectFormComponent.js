@@ -2,7 +2,7 @@ import React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { useController } from "react-hook-form";
 
-export function SelectInput({ control, name, label, options }) {
+export function SelectInput({ control, name, label, options, rules }) {
   const [rental_agent, set_rental_agent] = React.useState("");
   const {
     field: { ref, ...inputProps },
@@ -11,7 +11,7 @@ export function SelectInput({ control, name, label, options }) {
   } = useController({
     name,
     control,
-    rules: { required: true },
+    rules: { required: rules?.required },
     defaultValue: "",
   });
 

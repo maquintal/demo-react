@@ -9,8 +9,7 @@ export function Input({ control, name, label, type, rules }) {
   } = useController({
     name,
     control,
-    // rules: { required: true },
-    rules: { rules },
+    rules: {required: rules?.required},
     defaultValue: "",
   });
 
@@ -28,7 +27,7 @@ export function Input({ control, name, label, type, rules }) {
    * */
 
   const displayError = (isSubmitted && rules?.required !== false && inputProps.value === "") || false
-  const displayHelperText = displayError ? rules?.required : ""
+  const displayHelperText = displayError ? `${inputProps.name} est requis` : ""
 
   return (
     <TextField
@@ -40,6 +39,7 @@ export function Input({ control, name, label, type, rules }) {
       type={type}
       error={displayError}
       helperText={displayHelperText}
+      required={rules?.required !== false || false}
     />
   )
 } 

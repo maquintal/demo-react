@@ -17,6 +17,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { Checkbox1 } from "../../FormComponents/CheckboxFormComponents";
 import { Input } from "../../FormComponents/formComponents";
 import { SelectInput } from "../../FormComponents/SelectFormComponent";
+import { AutoCompleteStringInput } from "../../FormComponents/AutoCompleteStringInput";
 
 // CUSTOM //
 import CustomizedSnackbars from "../../snackbar";
@@ -32,7 +33,7 @@ export default function BuildingForm() {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
 
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, errors } = useForm({
     reValidateMode: 'onSubmit',
     defaultValues: state?.selectedBuilding?.buildingInfo || {}
   });
@@ -60,10 +61,10 @@ export default function BuildingForm() {
     console.log(values)
   }
 
-  const onSubmit = (data) => {
+  /* const onSubmit = (data) => {
     // console.log(data)
     dispatch(setSelectedBuilding(data))
-  };
+  }; */
 
   const handleSave = async (formData) => {
 
@@ -122,29 +123,40 @@ export default function BuildingForm() {
       <div>
         <div title="5655 Elie, St-Hubert" />
         <div className={classes.root}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form /* onSubmit={handleSubmit(handleSave)} */>
             <Grid container spacing={3}>
               <Grid item xs={4}>
                 <Input
                   control={control}
                   name="civicNumber"
                   label="Numero Civic"
-                  rules={{ required: "Veuillez entrer un numéro civique" }}
+                  rules={{ required: true }}
                 />
               </Grid>
             </Grid>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Input control={control} name="street" label="Rue" />
+                <Input
+                  control={control}
+                  name="street"
+                  label="Rue"
+                  rules={{ required: true }}
+                />
               </Grid>
               <Grid item xs={12}>
-                <Input control={control} name="city" label="Ville" />
+                <Input
+                  control={control}
+                  name="city"
+                  label="Ville"
+                  rules={{ required: true }}
+                />
               </Grid>
               <Grid item xs={6}>
                 <Input
                   control={control}
                   name="province"
                   label="Province"
+                  rules={{ required: true }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -152,14 +164,24 @@ export default function BuildingForm() {
                   control={control}
                   name="zip_code"
                   label="Code Postal"
+                  rules={{ required: true }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <SelectInput
+                {/* <SelectInput
                   control={control}
                   label="Agent De location"
                   name="rental_agent"
                   options={options}
+                  rules={{ required: true }}
+                /> */}
+                <AutoCompleteStringInput
+                  control={control}
+                  label="Agent De location"
+                  name="rental_agent"
+                  options={options}
+                  rules={{ required: true }}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}></Grid>
