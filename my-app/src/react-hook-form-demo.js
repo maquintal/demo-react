@@ -17,7 +17,7 @@ import { setFormDemo, jusDePeche } from "../src/store/rootSlice"
 const ReactHookFormDemo = ({buildings}) => {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
-  const selectedBuilding = state.selectedBuilding
+  const selectedBuilding = state.reducer.selectedBuilding
 
   // console.log(buildings, 'buildings');
   // useEffect(() => {
@@ -26,8 +26,8 @@ const ReactHookFormDemo = ({buildings}) => {
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      demo: state.demo /* {
-        civicNumber: state.demo.civicNumber
+      demo: state.reducer.demo /* {
+        civicNumber: state.reducer.demo.civicNumber
       } */
     }
   });

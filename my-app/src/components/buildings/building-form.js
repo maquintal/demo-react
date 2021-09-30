@@ -28,17 +28,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm() {
+export default function BuildingForm({
+  isLoading,
+  handleClose
+}) {
 
   const dispatch = useDispatch()
   const state = useSelector(state => state)
 
   const { control, handleSubmit, getValues, errors } = useForm({
     reValidateMode: 'onSubmit',
-    defaultValues: state?.selectedBuilding?.buildingInfo || {}
+    defaultValues: state?.reducer?.selectedBuilding?.buildingInfo || {}
   });
 
-  const [open, setOpen] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("")
   const classes = useStyles();
@@ -98,7 +101,7 @@ export default function BuildingForm() {
     await axios({
       method: 'post',
       url: 'http://localhost:3000/api/buildings/updateOneBuildingInfo',
-      data: { selectedBuilding: state?.selectedBuilding, buildingFormData: formData }
+      data: { selectedBuilding: state.reducer.selectedBuilding, buildingFormData: formData }
     }).then(async response => {
       if (response.status === 200) {
         setSeverity("success")
@@ -107,15 +110,15 @@ export default function BuildingForm() {
         setSeverity("error")
         setSnackMessage(`${error}`)        
       }
-      console.log(response)
+      // console.log(response)
     }).catch(async error => {
       setSeverity("error")
       setSnackMessage(`${error}`)
       return (`${error}`)
     });
 
-    setOpen(true)
-
+    await setOpenSnackbar(false)
+    // handleClose()
   }
 
   return (
@@ -235,7 +238,8 @@ export default function BuildingForm() {
             onClick={handleSubmit(handleSave)}
           >
             {" "}
-            Sauvegarder
+            {/* {console.log(isLoading)} */}
+            {isLoading ? "loading" : null} Sauvegarder
           </Button>
           <Button
             variant="outlined"
@@ -252,7 +256,7 @@ export default function BuildingForm() {
             Supprimer
           </Button>
           <Button
-            variant="outlined"
+            variant="outlined" 
             color="secondary"
             onClick={() => checkFormState()}
           >
@@ -263,7 +267,7 @@ export default function BuildingForm() {
       </div>
       {open &&
         <CustomizedSnackbars
-          opened={open}
+          opened={openSnackbar}
           severity={severity}
           message={snackMessage}
         />

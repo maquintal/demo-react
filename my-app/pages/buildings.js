@@ -7,12 +7,13 @@ import BuildingForm from "../src/components/buildings/building-form";
 
 // import { red } from "@material-ui/core/colors";
 
-import { makeStyles, Grid, Button } from "@material-ui/core";
+import { makeStyles, Grid, Button, LinearProgress } from "@material-ui/core";
 // import { flexbox } from "@material-ui/system";
 
 // redux
 import { useDispatch, useSelector } from "react-redux"
 import { getBuildings, setSelectedBuilding } from "../src/store/rootSlice"
+import { useGetPokemonByNameQuery } from "../src/store/service/pokemon"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,24 +29,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Buildings = ({ buildings }) => {
+const Buildings = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
   const state = useSelector(state => state)
   const [expanded, setExpanded] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  // const [buildings, setBuildings] = React.useState([]) don't know if it will be used
+
+  const { data, error, isLoading } = useGetPokemonByNameQuery()
 
   useEffect(() => {
-    dispatch(getBuildings(buildings))
-  }, [state.buildings])
+    console.log("43")
+    dispatch(getBuildings(data))
+  }, [data, state.reducer.selectedBuilding])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handleClose = () => {
+    console.log("allo")
+    const test = useGetPokemonByNameQuery()
+    console.log(test)
+    dispatch(setSelectedBuilding({}))
     setOpenDialog(false);
   };
+
+  if (isLoading) {
+    return <LinearProgress />
+  }
+
+  if (error) {
+    return "error"
+  }
 
   return (
     <>
@@ -58,7 +75,7 @@ const Buildings = ({ buildings }) => {
       </Grid>
 
       <Grid container spacing={2} >
-        {state.buildings?.map((building, index) => {
+        {state.reducer.buildings?.map((building, index) => {
           return (
             <Grid item xs={4} className={classes.cardWrapper} key={index}>
               <BuildingCard
@@ -77,22 +94,13 @@ const Buildings = ({ buildings }) => {
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm />
+        <BuildingForm
+          isLoading={isLoading}
+          // handleClose={handleClose}
+        />
       </BuildingDialog>
     </>
   );
-};
-
-Buildings.getInitialProps = async (ctx) => {
-  try {
-    const res = await axios.get(
-      "http://localhost:3000/api/buildings/readAllBuildings"
-    );
-    const buildings = res.data;
-    return { buildings };
-  } catch (error) {
-    return { error };
-  }
 };
 
 export default Buildings;

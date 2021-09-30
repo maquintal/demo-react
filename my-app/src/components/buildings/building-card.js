@@ -26,7 +26,7 @@ import AppartmentForm from "../appartments/appartment-form";
 
 import { setSelectedBuilding } from "../../store/rootSlice"
 
-const BuildingCard = ({ building, classes }) => {
+const BuildingCard = ({ building, classes, handleClose }) => {
   const { buildingInfo } = building;
   
   const dispatch = useDispatch()
@@ -34,9 +34,10 @@ const BuildingCard = ({ building, classes }) => {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
 
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
+  /* const handleClose = () => {
+    dispatch(setSelectedBuilding({}))
+    // setOpenDialog(false);
+  }; */
 
   const handleCloseAppartmentDialog = () => {
     setOpenAppartmentDialog(false);
@@ -133,7 +134,9 @@ const BuildingCard = ({ building, classes }) => {
         openDialog={openDialog}
         handleClose={handleClose}
       >
-        <BuildingForm building={building} />
+        <BuildingForm
+          handleClose={handleClose}
+        />
       </BuildingDialog>
 
       <AppartmentDialog
