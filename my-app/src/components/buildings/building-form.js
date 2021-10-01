@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BuildingForm({
-  isLoading,
   handleClose
 }) {
 
@@ -118,7 +117,7 @@ export default function BuildingForm({
     });
 
     await setOpenSnackbar(false)
-    // handleClose()
+    handleClose()
   }
 
   return (
@@ -238,8 +237,7 @@ export default function BuildingForm({
             onClick={handleSubmit(handleSave)}
           >
             {" "}
-            {/* {console.log(isLoading)} */}
-            {isLoading ? "loading" : null} Sauvegarder
+            Sauvegarder
           </Button>
           <Button
             variant="outlined"

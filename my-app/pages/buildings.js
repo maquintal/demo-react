@@ -13,7 +13,7 @@ import { makeStyles, Grid, Button, LinearProgress } from "@material-ui/core";
 // redux
 import { useDispatch, useSelector } from "react-redux"
 import { getBuildings, setSelectedBuilding } from "../src/store/rootSlice"
-import { useGetPokemonByNameQuery } from "../src/store/service/pokemon"
+import { useGetPokemonByNameQuery } from "../src/service/pokemon"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ const Buildings = () => {
   const [openDialog, setOpenDialog] = React.useState(false);
   // const [buildings, setBuildings] = React.useState([]) don't know if it will be used
 
-  const { data, error, isLoading } = useGetPokemonByNameQuery()
+  const { data, error, isLoading, refetch } = useGetPokemonByNameQuery()
 
   useEffect(() => {
     console.log("43")
@@ -49,9 +49,7 @@ const Buildings = () => {
   };
 
   const handleClose = () => {
-    console.log("allo")
-    const test = useGetPokemonByNameQuery()
-    console.log(test)
+    console.log("hello")
     dispatch(setSelectedBuilding({}))
     setOpenDialog(false);
   };
@@ -84,6 +82,7 @@ const Buildings = () => {
                 expanded={expanded}
                 handleExpandClick={handleExpandClick}
                 key={building._id}
+                openDialog={openDialog}
               />
             </Grid>
           );
@@ -95,8 +94,7 @@ const Buildings = () => {
         handleClose={handleClose}
       >
         <BuildingForm
-          isLoading={isLoading}
-          // handleClose={handleClose}
+          handleClose={handleClose}
         />
       </BuildingDialog>
     </>
