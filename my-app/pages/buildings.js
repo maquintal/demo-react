@@ -13,7 +13,7 @@ import { makeStyles, Grid, Button, LinearProgress } from "@material-ui/core";
 // redux
 import { useDispatch, useSelector } from "react-redux"
 import { getBuildings, setSelectedBuilding } from "../src/store/rootSlice"
-import { useGetPokemonByNameQuery } from "../src/service/pokemon"
+import { useGetPokemonByNameQuery } from "../src/services/pokemon"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +35,6 @@ const Buildings = () => {
   const state = useSelector(state => state)
   const [expanded, setExpanded] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  // const [buildings, setBuildings] = React.useState([]) don't know if it will be used
 
   const { data, error, isLoading, refetch } = useGetPokemonByNameQuery()
 

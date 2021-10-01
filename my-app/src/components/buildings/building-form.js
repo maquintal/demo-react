@@ -5,6 +5,7 @@ import axios from "axios"
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
+import { useUpdatePostMutation } from "../../services/posts"
 
 // MATERIAL //
 import {
@@ -44,6 +45,13 @@ export default function BuildingForm({
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("")
   const classes = useStyles();
+  
+  const { data: post } = useUpdatePostMutation()
+
+  const [
+    updatePost, // This is the mutation trigger
+    { isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useUpdatePostMutation()
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -97,7 +105,7 @@ export default function BuildingForm({
     //   return (`${error}`)
     // });
 
-    await axios({
+    /* await axios({
       method: 'post',
       url: 'http://localhost:3000/api/buildings/updateOneBuildingInfo',
       data: { selectedBuilding: state.reducer.selectedBuilding, buildingFormData: formData }
@@ -114,7 +122,10 @@ export default function BuildingForm({
       setSeverity("error")
       setSnackMessage(`${error}`)
       return (`${error}`)
-    });
+    }); */
+
+    // Execute the trigger with the `id` and updated `name`
+    updatePost({ selectedBuilding: state.reducer.selectedBuilding, buildingFormData: formData })
 
     await setOpenSnackbar(false)
     handleClose()
@@ -237,7 +248,7 @@ export default function BuildingForm({
             onClick={handleSubmit(handleSave)}
           >
             {" "}
-            Sauvegarder
+            {isUpdating ? "loading" : null} Sauvegarder
           </Button>
           <Button
             variant="outlined"
