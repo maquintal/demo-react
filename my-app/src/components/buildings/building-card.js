@@ -35,6 +35,7 @@ const BuildingCard = ({ building, classes }) => {
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
 
   const handleClose = () => {
+    dispatch(setSelectedBuilding({}))
     setOpenDialog(false);
   };
 
@@ -131,9 +132,12 @@ const BuildingCard = ({ building, classes }) => {
       <BuildingDialog
         title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
         openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
         handleClose={handleClose}
       >
-        <BuildingForm building={building} />
+        <BuildingForm
+          handleClose={handleClose}
+        />
       </BuildingDialog>
 
       <AppartmentDialog

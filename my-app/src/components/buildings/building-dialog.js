@@ -23,6 +23,7 @@ export default function BuildingDialog({
   title,
   children,
   openDialog,
+  setOpenDialog,
   handleClose
   /* , setOpenDialog */
 }) {
@@ -37,7 +38,7 @@ export default function BuildingDialog({
             <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
               {title}
             </Typography>
-            <ActionButton color="secondary" onClick={() => handleClose()}>
+            <ActionButton color="secondary" onClick={() => {setOpenDialog(false); handleClose(); }}>
               <CloseIcon fontSize="large" />
             </ActionButton>
           </div>
