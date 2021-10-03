@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { reducer } from "./rootSlice"
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { pokemonApi } from "../service/pokemon"
+import { pokemonApi } from "../services/pokemon"
 
 export const store = configureStore({
   // reducer,
