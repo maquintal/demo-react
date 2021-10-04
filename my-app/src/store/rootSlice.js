@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, current } from "@reduxjs/toolkit"
 
 const rootSlice = createSlice({
   name: "root",
@@ -9,13 +9,18 @@ const rootSlice = createSlice({
       street: "Monseigneur-Coderre",
     },
     buildings: [],
-    selectedBuilding: {}
+    selectedBuilding: {},
+    appartments: [],
+    selectedAppartments: {},
   },
   reducers: {
     setFormDemo: (state, action) => { state.demo = action.payload },
     getBuildings: (state, action) => {state.buildings = action.payload},
     setSelectedBuilding: (state, action) => { state.selectedBuilding = action.payload },
     setSelectedBuildingBuildingInfo: (state, action) => { state.selectedBuilding.buildingInfo = action.payload },
+    addAppartmentToBuilding: (state, action) => {
+      state.selectedBuilding.buildingInfo.appartments.push({})
+    }
   }
 })
 
@@ -26,4 +31,5 @@ export const {
   getBuildings,
   setSelectedBuilding,
   setSelectedBuildingBuildingInfo,
+  addAppartmentToBuilding,
 } = rootSlice.actions

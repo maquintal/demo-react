@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import CloseIcon from '@material-ui/icons/Close';
 import ActionButton from "../ActionButton";
-import { setSelectedBuilding } from "../../store/rootSlice";
+import { addAppartmentToBuilding } from "../../store/rootSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
 const AppartmentDialog = ({ title, children, openDialog, handleClose }) => {
   const classes = useStyles();
   const state = useSelector(state => state)
-  const dispatche = useDispatch()
+  const dispatch = useDispatch()
 
   const addAppartment = () => {
-    console.log(state.reducer.selectedBuilding.buildingInfo.appartments)
+    dispatch(addAppartmentToBuilding({}))
   }
     return (
         <div>
           <Dialog open={openDialog} maxWidth="xl" fullWidth={true}>
-            <DialogTitle /*className={classes.dialogTitle}*/>
+            <DialogTitle>
               <div className={classes.headerWrapper}>
               <Button variant="outlined" component="div" onClick={() => {addAppartment()}}>
                 Ajouter un appartement
