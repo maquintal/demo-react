@@ -106,7 +106,7 @@ const BuildingCard = ({ building, classes }) => {
         <CardActions disableSpacing>
           <Button
             variant="outlined"
-            onClick={() => setOpenAppartmentDialog(true)}
+            onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
           >
             <Typography variant="body2" color="textSecondary" component="p">
               Appartements

@@ -9,9 +9,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
+// import {  } from "../../store/rootSlice"
+
+import { useDispatch, useSelector } from "react-redux"
 
 import CloseIcon from '@material-ui/icons/Close';
 import ActionButton from "../ActionButton";
+import { setSelectedBuilding } from "../../store/rootSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,15 +34,20 @@ const useStyles = makeStyles((theme) => ({
 
 const AppartmentDialog = ({ title, children, openDialog, handleClose }) => {
   const classes = useStyles();
+  const state = useSelector(state => state)
+  const dispatche = useDispatch()
+
+  const addAppartment = () => {
+    console.log(state.reducer.selectedBuilding.buildingInfo.appartments)
+  }
     return (
         <div>
           <Dialog open={openDialog} maxWidth="xl" fullWidth={true}>
             <DialogTitle /*className={classes.dialogTitle}*/>
               <div className={classes.headerWrapper}>
-              <Button variant="outlined" component="div">Ajouter un appartement</Button>
-                {/* <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-                  {title}
-                </Typography> */}
+              <Button variant="outlined" component="div" onClick={() => {addAppartment()}}>
+                Ajouter un appartement
+                </Button>
                 <ActionButton color="secondary"  onClick={() => handleClose()}>
                   <CloseIcon fontSize="large" />
                 </ActionButton>
