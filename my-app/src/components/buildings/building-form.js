@@ -45,7 +45,7 @@ export default function BuildingForm({
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("")
   const classes = useStyles();
-  
+
   const { data: post } = useUpdatePostMutation()
 
   const [
@@ -115,7 +115,7 @@ export default function BuildingForm({
         setSnackMessage(`Record Created`)
       } else {
         setSeverity("error")
-        setSnackMessage(`${error}`)        
+        setSnackMessage(`${error}`)
       }
       // console.log(response)
     }).catch(async error => {
@@ -253,6 +253,7 @@ export default function BuildingForm({
           <Button
             variant="outlined"
             color="primary"
+            onClick={() => {handleClose(); dispatch(setSelectedBuilding({}));}}
           >
             {" "}
             Annuler
@@ -265,7 +266,7 @@ export default function BuildingForm({
             Supprimer
           </Button>
           <Button
-            variant="outlined" 
+            variant="outlined"
             color="secondary"
             onClick={() => checkFormState()}
           >
