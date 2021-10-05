@@ -1,5 +1,9 @@
 import React from "react";
 
+import { useDispatch } from "react-redux";
+
+import {setSelectedBuilding} from '../../store/rootSlice'
+
 import {
   Dialog,
   DialogTitle,
@@ -29,6 +33,7 @@ export default function BuildingDialog({
 }) {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -38,7 +43,11 @@ export default function BuildingDialog({
             <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
               {title}
             </Typography>
-            <ActionButton color="secondary" onClick={() => {setOpenDialog(false); handleClose(); }}>
+            <ActionButton color="secondary" onClick={() => {
+              /* setOpenDialog(false); */
+              dispatch(setSelectedBuilding({}));
+              handleClose();
+              }}>
               <CloseIcon fontSize="large" />
             </ActionButton>
           </div>
