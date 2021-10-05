@@ -83,13 +83,16 @@ const AppartmentForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const [{...appartment}] = state?.reducer?.selectedBuilding?.buildingInfo.appartments
-  console.log('app', appartment)
+  
+
 
   const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: appartment
+    defaultValues: 
+      state?.reducer?.selectedBuilding?.buildingInfo.appartments
+    
   });
+
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
@@ -104,8 +107,7 @@ const AppartmentForm = (props) => {
 
   return (
     <div className={classes.root}>
-      {state.reducer.selectedBuilding.buildingInfo.appartments.map(
-        (appartment, index) => {
+      {fields.map((appartment, index) => {
           return (
             <Accordion key={index}>
               <AccordionSummary
@@ -115,7 +117,7 @@ const AppartmentForm = (props) => {
               >
                 <Typography className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
-                    <Input control={control} name="app_number" label="Appartement #"/>
+                    <Input ref={register()} name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
                   </Badge>
                 </Typography>
               </AccordionSummary>
