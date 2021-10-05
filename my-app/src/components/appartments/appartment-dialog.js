@@ -42,7 +42,7 @@ const AppartmentDialog = ({ title, children, openDialog, handleClose }) => {
   }
     return (
         <div>
-          <Dialog open={openDialog} maxWidth="xl" fullWidth={true}>
+          <Dialog open={openDialog} maxWidth="xl" fullWidth={true} onClose={handleClose}>
             <DialogTitle>
               <div className={classes.headerWrapper}>
               <Button variant="outlined" component="div" onClick={() => {addAppartment()}}>
