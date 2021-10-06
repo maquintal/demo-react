@@ -26,6 +26,8 @@ import AppartmentForm from "../appartments/appartment-form";
 
 import { setSelectedBuilding } from "../../store/rootSlice"
 
+import {ConfirmationDialog} from "../ConfirmationDialog";
+
 const BuildingCard = ({ building, classes }) => {
   const { buildingInfo } = building;
   
@@ -33,6 +35,7 @@ const BuildingCard = ({ building, classes }) => {
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
 
   const handleClose = () => {
     dispatch(setSelectedBuilding({}))
@@ -42,6 +45,10 @@ const BuildingCard = ({ building, classes }) => {
   const handleCloseAppartmentDialog = () => {
     setOpenAppartmentDialog(false);
   };
+
+  const handleCloseConfirmationDialog = () => {
+    setOpenConfirmDialog(false);
+  }
 
   const deleteOneBuildingById = async (id) => {
     // Send a POST request
@@ -106,7 +113,7 @@ const BuildingCard = ({ building, classes }) => {
         <CardActions disableSpacing>
           <Button
             variant="outlined"
-            onClick={() => setOpenAppartmentDialog(true)}
+            onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
           >
             <Typography variant="body2" color="textSecondary" component="p">
               Appartements
@@ -121,7 +128,8 @@ const BuildingCard = ({ building, classes }) => {
           <IconButton
             aria-label="share"
             color="secondary"
-            onClick={() => deleteOneBuildingById(building._id)}
+            // onClick={() => deleteOneBuildingById(building._id)}
+            onClick={() => setOpenConfirmDialog(true)}
           >
             <DeleteIcon />
           </IconButton>
@@ -152,6 +160,13 @@ const BuildingCard = ({ building, classes }) => {
         ======================================*/}
         <AppartmentForm />
       </AppartmentDialog>
+
+      <ConfirmationDialog
+        message="voulez-vous couchez avec moi?"
+        openDialog={openConfirmDialog}
+        handleClose={handleCloseConfirmationDialog}
+        onClick={() => {deleteOneBuildingById(building._id); setOpenConfirmDialog(false);}}
+      />
     </>
   );
 };

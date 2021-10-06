@@ -1,6 +1,6 @@
 // NODEJS//
 import React from "react";
-import axios from "axios"
+import axios from "axios";
 
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,7 @@ import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../stor
 import { useUpdatePostMutation } from "../../services/pokemon"
 
 // MATERIAL //
-import {
-  Button, Grid
-} from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // RHF//
@@ -19,7 +17,9 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { Checkbox1 } from "../../FormComponents/CheckboxFormComponents";
 import { Input } from "../../FormComponents/formComponents";
 import { SelectInput } from "../../FormComponents/SelectFormComponent";
+
 import { AutoCompleteStringInput } from "../../FormComponents/AutoCompleteStringInput";
+import { ConfirmationDialog } from "../ConfirmationDialog";
 
 // CUSTOM //
 import CustomizedSnackbars from "../../snackbar";
@@ -30,47 +30,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BuildingForm({
-  handleClose,
-}) {
-
-  const dispatch = useDispatch()
-  const state = useSelector(state => state)
+export default function BuildingForm({ handleClose }) {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
 
   const { control, handleSubmit, getValues, errors } = useForm({
-    reValidateMode: 'onSubmit',
-    defaultValues: state?.reducer?.selectedBuilding?.buildingInfo || {}
+    reValidateMode: "onSubmit",
+    defaultValues: state?.reducer?.selectedBuilding?.buildingInfo || {},
   });
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [severity, setSeverity] = React.useState("");
-  const [snackMessage, setSnackMessage] = React.useState("")
+  const [snackMessage, setSnackMessage] = React.useState("");
+  const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
   const classes = useStyles();
-  
-  const { data: post } = useUpdatePostMutation()
+
+  const { data: post } = useUpdatePostMutation();
 
   const [
     updatePost, // This is the mutation trigger
     { isLoading: isUpdating }, // This is the destructured mutation result
-  ] = useUpdatePostMutation()
+  ] = useUpdatePostMutation();
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
-    control, // control props comes from useForm (optional: if you are using FormContext)
-    name: "test", // unique name for your Field Array
-    // keyName: "id", default to "id", you can change the key name
-  });
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: "test", // unique name for your Field Array
+      // keyName: "id", default to "id", you can change the key name
+    }
+  );
 
   const options = [
     "Martin Grégoire",
     "Francis Campeau",
     "kjiki",
-    "Katherine Handfield"
-  ]
+    "Katherine Handfield",
+  ];
 
   const checkFormState = () => {
     const values = getValues();
-    console.log(values)
-  }
+    console.log(values);
+  };
 
   /* const onSubmit = (data) => {
     // console.log(data)
@@ -78,11 +78,10 @@ export default function BuildingForm({
   }; */
 
   const handleSave = async (formData) => {
-
     try {
-      dispatch(setSelectedBuildingBuildingInfo(formData))
+      dispatch(setSelectedBuildingBuildingInfo(formData));
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
 
     // apres avoir modifié le state ou cé qu'on fait la mutation, dans le Reducer !?
@@ -116,7 +115,7 @@ export default function BuildingForm({
         setSnackMessage(`Record Created`)
       } else {
         setSeverity("error")
-        setSnackMessage(`${error}`)        
+        setSnackMessage(`${error}`)
       }
       // console.log(response)
     }).catch(async error => {
@@ -126,11 +125,18 @@ export default function BuildingForm({
     }); */
 
     // Execute the trigger with the `id` and updated `name`
-    updatePost({ selectedBuilding: state.reducer.selectedBuilding, buildingFormData: formData })
+    updatePost({
+      selectedBuilding: state.reducer.selectedBuilding,
+      buildingFormData: formData,
+    });
 
-    await setOpenSnackbar(false)
-    handleClose()
-  }
+    await setOpenSnackbar(false);
+    handleClose();
+  };
+
+  const handleCloseConfirmationDialog = () => {
+    setOpenConfirmDialog(false);
+  };
 
   return (
     <>
@@ -202,9 +208,10 @@ export default function BuildingForm({
               {fields.map((field, index) => {
                 return (
                   <Grid item xs={12} key={`${field}-${index}`}>
-
                     <Grid item>
-                      <button type="button" onClick={() => remove(index)}>Delete</button>
+                      <button type="button" onClick={() => remove(index)}>
+                        Delete
+                      </button>
                     </Grid>
                     <Grid item>
                       <Input
@@ -237,7 +244,7 @@ export default function BuildingForm({
                       </Grid>
                     </Grid>
                   </Grid>
-                )
+                );
               })}
             </Grid>
           </form>
@@ -254,6 +261,10 @@ export default function BuildingForm({
           <Button
             variant="outlined"
             color="primary"
+            onClick={() => {
+              handleClose();
+              dispatch(setSelectedBuilding({}));
+            }}
           >
             {" "}
             Annuler
@@ -261,12 +272,13 @@ export default function BuildingForm({
           <Button
             variant="outlined"
             color="secondary"
+            onClick={() => setOpenConfirmDialog(true)}
           >
             {" "}
             Supprimer
           </Button>
           <Button
-            variant="outlined" 
+            variant="outlined"
             color="secondary"
             onClick={() => checkFormState()}
           >
@@ -275,13 +287,26 @@ export default function BuildingForm({
           </Button>
         </div>
       </div>
-      {open &&
+      {(open && (
         <CustomizedSnackbars
           opened={openSnackbar}
           severity={severity}
           message={snackMessage}
         />
-        || null}
+      )) ||
+        null}
+      <ConfirmationDialog
+        message="en attente de redux delete action pour ne pas a réutiliser la function dans building-card.js"
+        openDialog={openConfirmDialog}
+        handleClose={handleCloseConfirmationDialog}
+        onClick={() =>
+          /* deleteOneBuildingById(building._id); */ setOpenConfirmDialog(false)
+        }
+      >
+        De plus, en pesant sur ok, le dialog de confirmation se ferme, mais pas celui du building 
+        (ce qui serait normal qu'il se ferme, car tu confirme vouloir supprimer le building)
+        repenser a la methode des dialog (redux state??); Voila enfin la magie de REDUX.
+      </ConfirmationDialog>
     </>
   );
 }
