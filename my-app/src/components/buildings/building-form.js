@@ -5,7 +5,8 @@ import axios from "axios"
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
-import { useUpdatePostMutation } from "../../services/posts"
+// import { useUpdatePostMutation } from "../../services/posts"
+import { useUpdatePostMutation } from "../../services/pokemon"
 
 // MATERIAL //
 import {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BuildingForm({
-  handleClose
+  handleClose,
 }) {
 
   const dispatch = useDispatch()

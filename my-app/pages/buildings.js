@@ -38,10 +38,12 @@ const Buildings = () => {
 
   const { data, error, isLoading, refetch } = useGetPokemonByNameQuery()
 
+  // console.log(data)
+
   useEffect(() => {
-    console.log("43")
+    refetch()
     dispatch(getBuildings(data))
-  }, [data, state.reducer.selectedBuilding])
+  }, [data, /* state.reducer.selectedBuilding */ state?.pokemonApi?.mutations])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -80,8 +82,8 @@ const Buildings = () => {
                 classes={classes}
                 expanded={expanded}
                 handleExpandClick={handleExpandClick}
-                key={building._id}
-                openDialog={openDialog}
+                // key={building._id}
+                // openDialog={openDialog}
               />
             </Grid>
           );

@@ -8,14 +8,16 @@ export const postApi = createApi({
   endpoints: (build) => ({
     updatePost: build.mutation({
       query(data) {
-        console.log(body)
+
         const { ...body } = data
+
         return {
           url: `buildings/updateOneBuildingInfo`,
           method: 'POST',
           body,
         }
       },
+      // providesTags: ['Post'],
       // Invalidates all queries that subscribe to this Post `id` only.
       // In this case, `getPost` will be re-run. `getPosts` *might*  rerun, if this id was under its results.
       // invalidatesTags: (result, error, { id }) => [{ type: 'Posts', id }],
