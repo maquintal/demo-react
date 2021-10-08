@@ -4,7 +4,7 @@ import axios from "axios";
 
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
+import { getBuildings, setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
 // import { useUpdatePostMutation } from "../../services/posts"
 import { useUpdatePostMutation } from "../../services/pokemon"
 

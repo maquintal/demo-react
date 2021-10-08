@@ -41,16 +41,15 @@ const Buildings = () => {
   // console.log(data)
 
   useEffect(() => {
-    refetch()
+    // refetch()
     dispatch(getBuildings(data))
-  }, [data, /* state.reducer.selectedBuilding */ state?.pokemonApi?.mutations])
+  }, [data, /* state?.pokemonApi?.mutations */])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handleClose = () => {
-    console.log("hello")
     dispatch(setSelectedBuilding({}))
     setOpenDialog(false);
   };

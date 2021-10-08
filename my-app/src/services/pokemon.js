@@ -8,14 +8,7 @@ export const pokemonApi = createApi({
   endpoints: (build) => ({
     getPokemonByName: build.query({
       query: () => `buildings/readAllBuildings`,
-      // providesTags: ['Post'],
-      // providesTags: (result) =>
-      // result
-      //   ? [
-      //       { type: 'Post', id: 'LIST' },
-      //       ...result.map(( { id } ) => ({ type: 'Post', id })),
-      //     ]
-      //   : [{ type: 'Post', id: 'LIST' }],
+      providesTags: ['Post'],
     }),
     updatePost: build.mutation({
       query(data) {
@@ -28,11 +21,7 @@ export const pokemonApi = createApi({
           body,
         }
       },
-      invalidatesTags: ['Post'],
-      // providesTags: ['Post'],
-      // Invalidates all queries that subscribe to this Post `id` only.
-      // In this case, `getPost` will be re-run. `getPosts` *might*  rerun, if this id was under its results.
-      // invalidatesTags: (result, error, { id }) => [{ type: 'Posts', id }],
+      invalidatesTags: ['Post']
     }),
   }),
 })
