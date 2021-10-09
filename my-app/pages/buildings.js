@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 
 import BuildingCard from "../src/components/buildings/building-card";
 import BuildingDialog from "../src/components/buildings/building-dialog"
 import BuildingForm from "../src/components/buildings/building-form";
 
-// import { red } from "@material-ui/core/colors";
 
 import { makeStyles, Grid, Button, LinearProgress } from "@material-ui/core";
 // import { flexbox } from "@material-ui/system";
@@ -13,7 +11,7 @@ import { makeStyles, Grid, Button, LinearProgress } from "@material-ui/core";
 // redux
 import { useDispatch, useSelector } from "react-redux"
 import { getBuildings, setSelectedBuilding } from "../src/store/rootSlice"
-import { useGetPokemonByNameQuery } from "../src/services/pokemon"
+import { useGetAllBuildingsQuery } from "../src/services/buildingInfo"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,14 +34,11 @@ const Buildings = () => {
   const [expanded, setExpanded] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const { data, error, isLoading, refetch } = useGetPokemonByNameQuery()
-
-  // console.log(data)
+  const { data, error, isLoading, refetch } = useGetAllBuildingsQuery()
 
   useEffect(() => {
-    // refetch()
     dispatch(getBuildings(data))
-  }, [data, /* state?.pokemonApi?.mutations */])
+  }, [data])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
