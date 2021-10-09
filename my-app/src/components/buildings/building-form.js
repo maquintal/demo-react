@@ -4,11 +4,8 @@ import axios from "axios";
 
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSelectedBuilding,
-  setSelectedBuildingBuildingInfo,
-} from "../../store/rootSlice";
-import { useUpdatePostMutation } from "../../services/posts";
+import { getBuildings, setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
+import { useUpdateBuildingInfoMutation } from "../../services/buildingInfo"
 
 // MATERIAL //
 import { Button, Grid } from "@material-ui/core";
@@ -47,12 +44,12 @@ export default function BuildingForm({ handleClose }) {
   const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
   const classes = useStyles();
 
-  const { data: post } = useUpdatePostMutation();
+  const { data: post } = useUpdateBuildingInfoMutation();
 
   const [
     updatePost, // This is the mutation trigger
     { isLoading: isUpdating }, // This is the destructured mutation result
-  ] = useUpdatePostMutation();
+  ] = useUpdateBuildingInfoMutation();
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
@@ -86,47 +83,6 @@ export default function BuildingForm({ handleClose }) {
       throw new Error(error);
     }
 
-    // apres avoir modifié le state ou cé qu'on fait la mutation, dans le Reducer !?
-    // option 2, ne pas modifié le state, et faire la mutation, pcq anyway le state va se mettre a jour apres
-    // par contre, un save doit absolument se faire avant de changer de page.... TBD
-
-    // Send a POST request
-    // axios({
-    //   method: 'post',
-    //   url: 'http://localhost:3000/api/buildings/createOneBuilding',
-    //   data: { buildingFormData: formData }
-    // }).then(async response => {
-    //   if (response.status === 200) {
-    //     await setSeverity("success")
-    //     await setSnackMessage(`Record Created`)
-    //   }
-    //   console.log(response)
-    // }).catch(async error => {
-    //   await setSeverity("error")
-    //   await setSnackMessage(`${error}`)
-    //   return (`${error}`)
-    // });
-
-    /* await axios({
-      method: 'post',
-      url: 'http://localhost:3000/api/buildings/updateOneBuildingInfo',
-      data: { selectedBuilding: state.reducer.selectedBuilding, buildingFormData: formData }
-    }).then(async response => {
-      if (response.status === 200) {
-        setSeverity("success")
-        setSnackMessage(`Record Created`)
-      } else {
-        setSeverity("error")
-        setSnackMessage(`${error}`)
-      }
-      // console.log(response)
-    }).catch(async error => {
-      setSeverity("error")
-      setSnackMessage(`${error}`)
-      return (`${error}`)
-    }); */
-
-    // Execute the trigger with the `id` and updated `name`
     updatePost({
       selectedBuilding: state.reducer.selectedBuilding,
       buildingFormData: formData,
