@@ -1,10 +1,9 @@
 // NODEJS//
 import React from "react";
-import axios from "axios";
 
 // REDUX //
 import { useDispatch, useSelector } from "react-redux";
-import { getBuildings, setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
+import { setSelectedBuilding, setSelectedBuildingBuildingInfo } from "../../store/rootSlice";
 import { useUpdateBuildingInfoMutation } from "../../services/buildingInfo"
 
 // MATERIAL //
@@ -48,7 +47,7 @@ export default function BuildingForm({ handleClose }) {
 
   const [
     updatePost, // This is the mutation trigger
-    { isLoading: isUpdating }, // This is the destructured mutation result
+    { isLoading, isError, isSuccess, error, fulfilledTimeStamp, isUninitialized }, // This is the destructured mutation result
   ] = useUpdateBuildingInfoMutation();
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -76,11 +75,29 @@ export default function BuildingForm({ handleClose }) {
     dispatch(setSelectedBuilding(data))
   }; */
 
-  const handleSave = async (formData) => {
+  // console.log(error)
+
+  React.useEffect(() => {
+    console.log(isUninitialized)
+    if (fulfilledTimeStamp && isSuccess) {
+        setSnackMessage("Record Updated"),
+        setSeverity("success")
+        // handleClose();
+    } else {
+      setSnackMessage(error?.error)
+      setSeverity("error")
+    }
+
+    setOpenSnackbar(!isUninitialized)
+
+  }, [fulfilledTimeStamp, error, isSuccess, isUninitialized])
+
+  const handleSave = async (formData, isSuccess, isError, error) => {
     try {
       dispatch(setSelectedBuildingBuildingInfo(formData));
     } catch (error) {
-      throw new Error(error);
+      // throw new Error(error);
+      setSnackMessage(error)
     }
 
     updatePost({
@@ -88,8 +105,6 @@ export default function BuildingForm({ handleClose }) {
       buildingFormData: formData,
     });
 
-    await setOpenSnackbar(false);
-    handleClose();
   };
 
   const handleCloseConfirmationDialog = () => {
@@ -214,7 +229,8 @@ export default function BuildingForm({ handleClose }) {
             onClick={handleSubmit(handleSave)}
           >
             {" "}
-            {isUpdating ? "loading" : null} Sauvegarder
+            {/* {isLoading ? "loading" : null} Sauvegarder */}
+            {isLoading ? "Loading" : "Sauvegarder"}
           </Button>
           <Button
             variant="outlined"
@@ -245,7 +261,7 @@ export default function BuildingForm({ handleClose }) {
           </Button>
         </div>
       </div>
-      {(open && (
+      {(openSnackbar && (
         <CustomizedSnackbars
           opened={openSnackbar}
           severity={severity}

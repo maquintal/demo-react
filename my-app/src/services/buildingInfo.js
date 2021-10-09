@@ -16,7 +16,7 @@ export const buildingInfoApi = createApi({
         const { ...body } = data
 
         return {
-          url: `buildings/updateOneBuildingInfo`,
+          url: `buildings/updateOne!BuildingInfo`,
           method: 'POST',
           body,
         }
