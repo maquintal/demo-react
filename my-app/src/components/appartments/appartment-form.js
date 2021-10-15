@@ -116,30 +116,41 @@ const AppartmentForm = (props) => {
   return (
     <div className={classes.root}>
       <div /* className={classes.headerWrapper} */>
-              <Button variant="outlined" component="div" onClick={() => append({appartment_start_bail: 'tabarnak'})}>
+              <Button variant="outlined" component="div" onClick={() => append({appartment_start_lease: 'tabarnak'})}>
                 Ajouter un appartement
                 </Button>
               </div>
       {fields?.map((appartment, index) => {
           return (
-            <Accordion /* key={index} */>
+            <>
+            <Input
+                          control={control}
+                          name={`appartments.${index}.appartment_start_lease`}
+                          key={`appartments.${index}`}
+                          // name="appartment_start_lease"
+                          type="text"
+                          // label="Grandeur de l'appartement"
+                        />
+            
+            {/* <Accordion key={index}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.heading}>
+                {/* <Typography className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
-                    <Input /* ref={register()} */ name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
+                    <Input name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
                   </Badge>
-                </Typography>
+                </Typography> *}
               </AccordionSummary>
               <AccordionDetails>
               <Input
                           control={control}
                           name={`appartments.${index}.appartment_start_lease`}
+                          key={`appartments.${index}`}
                           // name="appartment_start_lease"
-                          type="date"
+                          type="text"
                           // label="Grandeur de l'appartement"
                         />
                 {/* <div className={classes.tabsRoot}>
@@ -308,9 +319,10 @@ const AppartmentForm = (props) => {
                       </Grid>
                     </Grid>
                   </TabPanel>
-                </div> */}
+                </div> *}
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
+          </>
           );
         }
       )}
