@@ -18,9 +18,7 @@ const rootSlice = createSlice({
     getBuildings: (state, action) => {state.buildings = action.payload},
     setSelectedBuilding: (state, action) => { state.selectedBuilding = action.payload },
     setSelectedBuildingBuildingInfo: (state, action) => { state.selectedBuilding.buildingInfo = action.payload },
-    addAppartmentToBuilding: (state, action) => {
-      state.selectedBuilding.buildingInfo.appartments.push({})
-    }
+    addAppartmentToBuilding: (state, action) => {state.selectedBuilding.appartments = action.payload}
   }
 })
 

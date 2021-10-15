@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
+  Button,
   Tabs,
   Tab,
   Box,
@@ -89,7 +90,7 @@ const AppartmentForm = (props) => {
   const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: 
-      state?.reducer?.selectedBuilding?.buildingInfo.appartments
+      state?.reducer?.selectedBuilding?.buildingInfo.appartments || [{}]
     
   });
 
@@ -101,15 +102,27 @@ const AppartmentForm = (props) => {
     }
   );
 
+  // useEffect(() => {
+  //   console.log(fields.length)
+  //   if(fields.length <= 0) {
+  //     append({input: 'text'})  
+  //   }
+  // }, [])
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <div className={classes.root}>
-      {fields.map((appartment, index) => {
+      <div /* className={classes.headerWrapper} */>
+              <Button variant="outlined" component="div" onClick={() => append({appartment_start_bail: 'tabarnak'})}>
+                Ajouter un appartement
+                </Button>
+              </div>
+      {fields?.map((appartment, index) => {
           return (
-            <Accordion key={index}>
+            <Accordion /* key={index} */>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -117,12 +130,19 @@ const AppartmentForm = (props) => {
               >
                 <Typography className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
-                    <Input ref={register()} name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
+                    <Input /* ref={register()} */ name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
                   </Badge>
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <div className={classes.tabsRoot}>
+              <Input
+                          control={control}
+                          name={`appartments.${index}.appartment_start_lease`}
+                          // name="appartment_start_lease"
+                          type="date"
+                          // label="Grandeur de l'appartement"
+                        />
+                {/* <div className={classes.tabsRoot}>
                   <Tabs
                     orientation="vertical"
                     variant="scrollable"
@@ -131,7 +151,7 @@ const AppartmentForm = (props) => {
                     aria-label="Vertical tabs example"
                     className={classes.tabs}
                   >
-                    <Tab label="Locataires" /*{...a11yProps(0)}*/ />
+                    <Tab label="Locataires" /*{...a11yProps(0)} />
                     <Tab
                       label={
                         <Badge badgeContent={4} color="primary" variant="dot">
@@ -154,7 +174,7 @@ const AppartmentForm = (props) => {
                       }
                     />
                   </Tabs>
-                  {/* panel content */}
+                  {/* panel content *}
                   <TabPanel value={value} index={0} variant="scrollable">
                     <TenantForm />
                   </TabPanel>
@@ -235,7 +255,7 @@ const AppartmentForm = (props) => {
                           {/* <FormattedNumberInput
                             control={control}
                             name="price"
-                          /> */}
+                          /> *}
                           <Input
                             control={control}
                             name="price"
@@ -288,7 +308,7 @@ const AppartmentForm = (props) => {
                       </Grid>
                     </Grid>
                   </TabPanel>
-                </div>
+                </div> */}
               </AccordionDetails>
             </Accordion>
           );

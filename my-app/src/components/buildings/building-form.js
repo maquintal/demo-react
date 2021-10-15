@@ -53,7 +53,7 @@ export default function BuildingForm({ handleClose }) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
-      name: "test", // unique name for your Field Array
+      name: "appartments", // unique name for your Field Array
       // keyName: "id", default to "id", you can change the key name
     }
   );
@@ -189,21 +189,21 @@ export default function BuildingForm({ handleClose }) {
                     <Grid item>
                       <Input
                         control={control}
-                        name={`test.${index}.appNumber`}
+                        name={`appartments.${index}.appNumber`}
                         label="First Name"
                       />
                     </Grid>
                     <Grid item>
                       <Input
                         control={control}
-                        name={`test.${index}.primaryFirstName`}
+                        name={`appartments.${index}.primaryFirstName`}
                         label="First Name"
                       />
                     </Grid>
                     <Grid item>
                       <Input
                         control={control}
-                        name={`test.${index}.primaryLastName`}
+                        name={`appartments.${index}.primaryLastName`}
                         label="Last Name"
                       />
                     </Grid>
@@ -211,7 +211,7 @@ export default function BuildingForm({ handleClose }) {
                       <Grid>
                         <Checkbox1
                           control={control}
-                          name={`test.${index}.cb`}
+                          name={`appartments.${index}.cb`}
                           label="Checkbox"
                         />
                       </Grid>
