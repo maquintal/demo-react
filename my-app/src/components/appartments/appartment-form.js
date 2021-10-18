@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 import {
   Accordion,
@@ -84,14 +84,14 @@ const AppartmentForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  
+
 
 
   const [value, setValue] = React.useState(0);
-  const { control, handleSubmit, getValues } = useForm({
-    defaultValues: 
+  const { control, handleSubmit, getValues, reset } = useForm({
+    defaultValues:
       state?.reducer?.selectedBuilding?.buildingInfo.appartments || [{}]
-    
+
   });
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -109,224 +109,73 @@ const AppartmentForm = (props) => {
   //   }
   // }, [])
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
+
+  const onSubmit = (data) => console.log("data", data);
+
+  useEffect(() => {
+    reset({
+      appartments: [
+        { firstName: { value: "firstName" }, lastName: { value: "lastName" } }
+      ]
+    });
+  }, [reset]);
 
   return (
-    <div className={classes.root}>
-      <div /* className={classes.headerWrapper} */>
-              <Button variant="outlined" component="div" onClick={() => append({appartment_start_lease: 'tabarnak'})}>
-                Ajouter un appartement
-                </Button>
-              </div>
-      {fields?.map((appartment, index) => {
-          return (
-            <>
-            <Input
-                          control={control}
-                          name={`appartments.${index}.appartment_start_lease`}
-                          key={`appartments.${index}`}
-                          // name="appartment_start_lease"
-                          type="text"
-                          // label="Grandeur de l'appartement"
-                        />
-            
-            {/* <Accordion key={index}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>Field Array </h1>
+      {fields.map((item, index) => {
+        return (
+          <React.Fragment>
+            <Accordion key={index}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                {/* <Typography className={classes.heading}>
+                <Typography className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
-                    <Input name={`appartments.${index}.app_number`} control={control} label="Appartement #"/>
+                    <Input name={`appartments.${index}.app_number`} control={control} label="Appartement #" />
                   </Badge>
-                </Typography> *}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
-              <Input
-                          control={control}
-                          name={`appartments.${index}.appartment_start_lease`}
-                          key={`appartments.${index}`}
-                          // name="appartment_start_lease"
-                          type="text"
-                          // label="Grandeur de l'appartement"
-                        />
-                {/* <div className={classes.tabsRoot}>
-                  <Tabs
-                    orientation="vertical"
-                    variant="scrollable"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Vertical tabs example"
-                    className={classes.tabs}
-                  >
-                    <Tab label="Locataires" /*{...a11yProps(0)} />
-                    <Tab
-                      label={
-                        <Badge badgeContent={4} color="primary" variant="dot">
-                          Informations
-                        </Badge>
-                      }
-                    />
-                    <Tab
-                      label={
-                        <Badge badgeContent={4} color="primary" variant="dot">
-                          Finance
-                        </Badge>
-                      }
-                    />
-                    <Tab
-                      label={
-                        <Badge badgeContent={4} color="primary" variant="dot">
-                          Commentaires
-                        </Badge>
-                      }
-                    />
-                  </Tabs>
-                  {/* panel content *}
-                  <TabPanel value={value} index={0} variant="scrollable">
-                    <TenantForm />
-                  </TabPanel>
-                  <TabPanel value={value} index={1} variant="scrollable">
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Grid item xs={4}>
-                          <Typography component="h5" variant="h5">
-                            {" "}
-                            Grandeur de l'appartement
-                          </Typography>
-                          <Input
-                            control={control}
-                            // name={`tenant.${index}.lastname`}
-                            name="height"
-                            // label="Grandeur de l'appartement"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Grid item xs={4}>
-                          <Typography component="h5" variant="h5">
-                            {" "}
-                            Méthode de paiement
-                          </Typography>
-                          <Autocomplete
-                            id="combo-box-demo"
-                            options={paymentMethod}
-                            getOptionLabel={(option) => option.title}
-                            style={{ width: "100%" }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                // label="Combo box"
-                                variant="outlined"
-                              />
-                            )}
-                          />
-                        </Grid>
-                      </Grid>
+                <Input
+                  name={`appartments.${index}.firstName.value`}
+                  control={control}
+                  label="Grandeur de l'appartement"
+                />
+                <Input
+                  name={`appartments.${index}.lastName.value`}
+                  control={control}
+                />
+                <button type="button" onClick={() => remove(index)}>
+                  Delete
+                </button>
 
-                      <Grid item xs={6}>
-                        <Typography component="h5" variant="h5">
-                          {" "}
-                          Début du Bail
-                        </Typography>
-                        <Input
-                          control={control}
-                          // name={`tenant.${index}.lastname`}
-                          name="appartment_start_bail"
-                          type="date"
-                          // label="Grandeur de l'appartement"
-                        />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography component="h5" variant="h5">
-                          {" "}
-                          Fin du Bail
-                        </Typography>
-                        <Input
-                          control={control}
-                          // name={`tenant.${index}.lastname`}
-                          name="appartment_end_bail"
-                          type="date"
-                          // label="Grandeur de l'appartement"
-                        />
-                      </Grid>
-                    </Grid>
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Grid item xs={4}>
-                          <Typography component="h5" variant="h5">
-                            {" "}
-                            Prix de l'appartement/mois
-                          </Typography>
-                          {/* <FormattedNumberInput
-                            control={control}
-                            name="price"
-                          /> *}
-                          <Input
-                            control={control}
-                            name="price"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Box mt={5}>
-                          <Typography component="h5" variant="h5">
-                            {" "}
-                            Reconduction du Bail
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Input
-                          control={control}
-                          name="reconduction_per_percentage"
-                          label="reconduction en %"
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Input
-                          control={control}
-                          name="reconduction_per_price"
-                          label="reconduction en $"
-                        />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <FormattedNumberInput
-                          control={control}
-                          name="appartment_price_after_reconduction"
-                          label="Prix après reconduction"
-                        />
-                      </Grid>
-                    </Grid>
-                  </TabPanel>
-                  <TabPanel value={value} index={3}>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        <TextField
-                          id="outlined-multiline-static"
-                          label="Commentaires"
-                          multiline
-                          rows={8}
-                          defaultValue=""
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </Grid>
-                    </Grid>
-                  </TabPanel>
-                </div> *}
               </AccordionDetails>
-            </Accordion> */}
-          </>
-          );
-        }
-      )}
-    </div>
+            </Accordion>
+
+          </React.Fragment>
+        );
+      })}
+
+      <button
+        type="button"
+        onClick={() => {
+          append({
+            firstName: { value: "" },
+            lastName: { value: "" }
+          });
+        }}
+      >
+        append
+      </button>
+      <input type="submit" />
+    </form>
+
   );
 };
 
