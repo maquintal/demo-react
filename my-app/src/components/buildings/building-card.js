@@ -115,11 +115,19 @@ const BuildingCard = ({ building, classes }) => {
         <CardActions disableSpacing>
           <Button
             variant="outlined"
-            // onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
-            onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
+            onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
+            // onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
           >
             <Typography variant="body2" color="textSecondary" component="p">
               Appartements
+            </Typography>
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
+          >
+            <Typography variant="body2" color="textSecondary" component="p">
+              route with state
             </Typography>
           </Button>
           <IconButton
