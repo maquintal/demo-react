@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { useDispatch } from "react-redux"
+import { useRouter } from 'next/router'
 
 import {
   Card,
@@ -32,6 +33,7 @@ const BuildingCard = ({ building, classes }) => {
   const { buildingInfo } = building;
   
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
@@ -113,7 +115,8 @@ const BuildingCard = ({ building, classes }) => {
         <CardActions disableSpacing>
           <Button
             variant="outlined"
-            onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
+            // onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
+            onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
           >
             <Typography variant="body2" color="textSecondary" component="p">
               Appartements
