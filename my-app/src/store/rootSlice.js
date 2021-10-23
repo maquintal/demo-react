@@ -10,15 +10,14 @@ const rootSlice = createSlice({
     },
     buildings: [],
     selectedBuilding: {},
-    appartments: [],
-    selectedAppartments: {},
+    selectedAppartment: {}
   },
   reducers: {
     setFormDemo: (state, action) => { state.demo = action.payload },
     getBuildings: (state, action) => {state.buildings = action.payload},
     setSelectedBuilding: (state, action) => { state.selectedBuilding = action.payload },
     setSelectedBuildingBuildingInfo: (state, action) => { state.selectedBuilding.buildingInfo = action.payload },
-    addAppartmentToBuilding: (state, action) => {state.selectedBuilding.appartments = action.payload}
+    setSelectedAppartment: (state, action) => {state.selectedAppartment = action.payload},
   }
 })
 
@@ -30,4 +29,5 @@ export const {
   setSelectedBuilding,
   setSelectedBuildingBuildingInfo,
   addAppartmentToBuilding,
+  setSelectedAppartment,
 } = rootSlice.actions

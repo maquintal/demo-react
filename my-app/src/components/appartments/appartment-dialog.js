@@ -42,16 +42,16 @@ const AppartmentDialog = ({ title, children, openDialog, handleClose }) => {
   }
     return (
         <div>
-          <Dialog open={openDialog} maxWidth="xl" fullWidth={true} onClose={handleClose}>
+          <Dialog open={openDialog} fullWidth={true} onClose={handleClose}>
             <DialogTitle>
-              {/* <div className={classes.headerWrapper}>
-              <Button variant="outlined" component="div" onClick={() => {addAppartment()}}>
-                Ajouter un appartement
-                </Button>
+              <div className={classes.headerWrapper}>
+                <Typography variant='h6'>
+                  Veillez choisir l'appartement désiré.
+                  </Typography>
                 <ActionButton color="secondary"  onClick={() => handleClose()}>
                   <CloseIcon fontSize="large" />
                 </ActionButton>
-              </div> */}
+              </div>
             </DialogTitle>
             <DialogContent dividers>{children}</DialogContent>
           </Dialog>

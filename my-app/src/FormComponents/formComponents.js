@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core";
 import { useController } from "react-hook-form";
 
-export function Input({ control, name, label, type, rules }) {
+export function Input({ control, name, label, type, rules, className }) {
   const {
     field: { ref, ...inputProps },
     fieldState: { invalid, isTouched, isDirty, error },
@@ -40,6 +40,7 @@ export function Input({ control, name, label, type, rules }) {
       error={displayError}
       helperText={displayHelperText}
       required={rules?.required !== false || false}
+      className={className}
     />
   )
 } 
