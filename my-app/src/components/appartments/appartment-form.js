@@ -1,33 +1,19 @@
-import React, { useEffect } from "react";
+import React, { Component, useEffect } from "react";
+import { useRouter } from 'next/router'
 
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  Divider,
   Typography,
-  Button,
-  Tabs,
-  Tab,
-  Box,
-  Grid,
-  TextField,
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
+import { setSelectedAppartment } from "../../store/rootSlice";
 
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
-import { useForm, useFieldArray } from "react-hook-form";
-import PropTypes from "prop-types";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
-import { Input } from "../../FormComponents/formComponents";
-import TenantForm from "./tenant-form";
-import FormattedNumberInput from "../../FormComponents/Formated Input/Number";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,52 +23,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
-  tabsRoot: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: "flex",
-    height: "800px",
-    overflowY: "scroll",
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    width: "250px",
-  },
-  tabPanel: {
-    width: "100%",
-  },
 }));
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  const classes = useStyles();
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-      className={classes.tabPanel}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
 
 const AppartmentForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const router = useRouter()
   const state = useSelector((state) => state);
 
   console.log(state?.reducer?.selectedBuilding?.appartments)
@@ -193,10 +139,8 @@ const AppartmentForm = (props) => {
   );
 };
 
-const paymentMethod = [
-  { title: "Chèque", year: 1994 },
-  { title: "Argent", year: 1994 },
-  { title: "Virement Automatique", year: 1994 },
-];
+export async function getStaticPaths() {
+  // Return a list of possible value for id
+}
 
 export default AppartmentForm;
