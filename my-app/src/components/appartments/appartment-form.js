@@ -1,5 +1,6 @@
 import React, { Component, useEffect } from "react";
 import { useRouter } from 'next/router'
+import { useFieldArray, useForm } from "react-hook-form";
 
 import {
   List,
@@ -8,12 +9,19 @@ import {
   ListItemButton,
   Divider,
   Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Badge
 } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMoreOutlined";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedAppartment } from "../../store/rootSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import { Input } from "../../FormComponents/formComponents"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +38,10 @@ const AppartmentForm = (props) => {
   const dispatch = useDispatch();
   const router = useRouter()
   const state = useSelector((state) => state);
-
+ 
   console.log(state?.reducer?.selectedBuilding?.appartments)
 
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues, reset } = useForm({
     defaultValues:
       state?.reducer?.selectedBuilding?.appartments
@@ -81,14 +89,14 @@ const AppartmentForm = (props) => {
       {fields.map((item, index) => {
         console.log(item)
         return (
-          <React.Fragment>
+          <React.Fragment key={`fragment-${index}`}>
             <Accordion key={index}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.heading}>
+                <Typography component={'div'} className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
                     <Input name={`appartments.${index}.app_number`} control={control} label="Appartement #" />
                   </Badge>
@@ -126,8 +134,8 @@ const AppartmentForm = (props) => {
         type="button"
         onClick={() => {
           append({
-            firstName: { value: "" },
-            lastName: { value: "" }
+            // firstName: { value: "" },
+            // lastName: { value: "" }
           });
         }}
       >

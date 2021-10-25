@@ -118,7 +118,7 @@ const BuildingCard = ({ index, classes }) => {
         <CardActions disableSpacing>
           <Button
             variant="outlined"
-            onClick={() => {dispatch(setSelectedBuilding(building)), setOpenAppartmentDialog(true)}}
+            onClick={() => {dispatch(setSelectedBuilding(state?.reducer?.buildings[index] /* building */)), setOpenAppartmentDialog(true)}}
             // onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
           >
             <Typography variant="body2" color="textSecondary" component="p">
@@ -128,11 +128,11 @@ const BuildingCard = ({ index, classes }) => {
           <Button
             variant="outlined"
             onClick={() => {
-              console.log(building)
-              dispatch(setSelectedBuilding(building));
-              dispatch(setSelectedBuilding(building));
+              // console.log(building)
+              dispatch(setSelectedBuilding(state?.reducer?.buildings[index] /* building */));
+              dispatch(setSelectedBuilding(state?.reducer?.buildings[index] /* building */));
               console.log(state);
-              router.push(`/fetch/${building?._id}`)
+              router.push(`/fetch/${state?.reducer?.buildings[index]?._id /* building?._id */}`)
             }}
           >
             <Typography variant="body2" color="textSecondary" component="p">
@@ -141,7 +141,7 @@ const BuildingCard = ({ index, classes }) => {
           </Button>
           <IconButton
             aria-label="add to favorites"
-            onClick={() => { dispatch(setSelectedBuilding(building)); setOpenDialog(true) }}
+            onClick={() => { dispatch(setSelectedBuilding(state?.reducer?.buildings[index] /* building */)); setOpenDialog(true) }}
           >
             <EditIcon />
           </IconButton>
@@ -185,7 +185,7 @@ const BuildingCard = ({ index, classes }) => {
         message="voulez-vous couchez avec moi?"
         openDialog={openConfirmDialog}
         handleClose={handleCloseConfirmationDialog}
-        onClick={() => {deleteOneBuildingById(building._id); setOpenConfirmDialog(false);}}
+        onClick={() => {deleteOneBuildingById(state?.reducer?.buildings[index]?._id /* building._id */); setOpenConfirmDialog(false);}}
       />
     </>
   );
