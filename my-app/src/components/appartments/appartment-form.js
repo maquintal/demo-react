@@ -1,7 +1,13 @@
+// NODEJS
 import React, { Component, useEffect } from "react";
+
+// NEXT
 import { useRouter } from 'next/router'
+
+// RHF
 import { useFieldArray, useForm } from "react-hook-form";
 
+// UI
 import {
   List,
   ListItem,
@@ -12,15 +18,19 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Badge
+  Badge,
+  Button
 } from "@material-ui/core";
+
 import ExpandMoreIcon from "@material-ui/icons/ExpandMoreOutlined";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectedAppartment } from "../../store/rootSlice";
-
 import { makeStyles } from "@material-ui/core/styles";
 
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedAppartment } from "../../store/rootSlice";
+import { useUpdateAppartmentsMutation } from "../../services/appartments"
+
+// CUSTOM
 import { Input } from "../../FormComponents/formComponents"
 
 const useStyles = makeStyles((theme) => ({
@@ -38,14 +48,22 @@ const AppartmentForm = (props) => {
   const dispatch = useDispatch();
   const router = useRouter()
   const state = useSelector((state) => state);
- 
-  console.log(state?.reducer?.selectedBuilding?.appartments)
+  const { data: post } = useUpdateAppartmentsMutation();
+
+  const [
+    updateAppartments, // This is the mutation trigger
+    { isLoading, isError, isSuccess, error, fulfilledTimeStamp, isUninitialized }, // This is the destructured mutation result
+  ] = useUpdateAppartmentsMutation();
 
   // const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues, reset } = useForm({
-    defaultValues:
-      state?.reducer?.selectedBuilding?.appartments
+    // defaultValues: [{
+    //   app_number: "",
+    //   firstName: "",
+    //   lastName: "",
+    // }]
 
+    defaultValues: state?.reducer?.selectedBuilding?.appartments  
   });
 
   // console.log(control)
@@ -68,23 +86,44 @@ const AppartmentForm = (props) => {
   //   setValue(newValue);
   // };
 
-  const onSubmit = (data) => console.log("data", data);
+  // const onSubmit = (data) => console.log("data", data);
+
+  const handleSave = async (formData, isSuccess, isError, error) => {
+    // try {
+    //   dispatch(setSelectedBuildingBuildingInfo(formData));
+    // } catch (error) {
+    //   // throw new Error(error);
+    //   setSnackMessage(error)
+    // }
+
+    console.log(formData)
+    updateAppartments({
+      selectedBuilding: state.reducer.selectedBuilding,
+      appartmentsFormData: formData,
+    });
+
+  };
 
   // console.log(fields)
 
   useEffect(() => {
     reset({
-      appartments: state?.reducer?.selectedBuilding?.appartments
+      // appartments: state?.reducer?.selectedBuilding?.appartments
       // appartments: [{
       //   // _id: _id,
       //   firstName: { value: "firstName" },
       //   lastName: { value: "lastName" }
       // }]
+      appartments: [{
+        app_number: "",
+        firstName: "",
+        lastName: "",
+      }]
     });
   }, [reset]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form /* onSubmit={handleSubmit(onSubmit)} */>
       <h1>Field Array </h1>
       {fields.map((item, index) => {
         console.log(item)
@@ -98,7 +137,12 @@ const AppartmentForm = (props) => {
               >
                 <Typography component={'div'} className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
-                    <Input name={`appartments.${index}.app_number`} control={control} label="Appartement #" />
+                    <Input
+                      name={`appartments.${index}.app_number`}
+                      control={control}
+                      label="Appartement #"
+                      // rules={{ required: true }}
+                    />
                   </Badge>
                 </Typography>
               </AccordionSummary>
@@ -141,14 +185,19 @@ const AppartmentForm = (props) => {
       >
         append
       </button>
-      <input type="submit" />
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleSubmit(handleSave)}
+      >
+        {" "}
+        {/* {isLoading ? "Loading" : "Sauvegarder"} */}
+        {"Sauvegarder"}
+      </Button>
+      {/* <input type="submit" /> */}
     </form>
 
   );
 };
-
-export async function getStaticPaths() {
-  // Return a list of possible value for id
-}
 
 export default AppartmentForm;
