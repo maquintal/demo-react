@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from 'next/router'
 
 import {
@@ -29,11 +29,14 @@ import { setSelectedBuilding } from "../../store/rootSlice"
 
 import {ConfirmationDialog} from "../ConfirmationDialog";
 
-const BuildingCard = ({ building, classes }) => {
-  const { buildingInfo } = building;
+const BuildingCard = ({ index, classes }) => {
+  // const { buildingInfo } = building;
   
   const dispatch = useDispatch()
   const router = useRouter()
+  const state = useSelector(state => state)
+
+  const { buildingInfo } = state?.reducer?.buildings[index]
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openAppartmentDialog, setOpenAppartmentDialog] = React.useState(false);
@@ -89,8 +92,8 @@ const BuildingCard = ({ building, classes }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
-          subheader={`${buildingInfo.rental_agent}`}
+          title={`${buildingInfo?.civicNumber} ${buildingInfo?.street}, ${buildingInfo?.city}, ${buildingInfo?.zip_code}`}
+          subheader={`${buildingInfo?.rental_agent}`}
         />
         <CardMedia
           className={classes.media}
@@ -124,7 +127,13 @@ const BuildingCard = ({ building, classes }) => {
           </Button>
           <Button
             variant="outlined"
-            onClick={() => { dispatch(setSelectedBuilding(building)), router.push('/') }}
+            onClick={() => {
+              console.log(building)
+              dispatch(setSelectedBuilding(building));
+              dispatch(setSelectedBuilding(building));
+              console.log(state);
+              router.push(`/fetch/${building?._id}`)
+            }}
           >
             <Typography variant="body2" color="textSecondary" component="p">
               route with state
@@ -149,7 +158,7 @@ const BuildingCard = ({ building, classes }) => {
       </Card>
 
       <BuildingDialog
-        title={`${buildingInfo.civicNumber} ${buildingInfo.street}, ${buildingInfo.city}, ${buildingInfo.zip_code}`}
+        title={`${buildingInfo?.civicNumber} ${buildingInfo?.street}, ${buildingInfo?.city}, ${buildingInfo?.zip_code}`}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         handleClose={handleClose}

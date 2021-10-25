@@ -85,15 +85,16 @@ const AppartmentForm = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-
+  console.log(state?.reducer?.selectedBuilding?.appartments)
 
   const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues, reset } = useForm({
     defaultValues:
-      state?.reducer?.selectedBuilding?.buildingInfo.appartments || [{}]
+      state?.reducer?.selectedBuilding?.appartments
 
   });
 
+  // console.log(control)
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
@@ -115,11 +116,16 @@ const AppartmentForm = (props) => {
 
   const onSubmit = (data) => console.log("data", data);
 
+  // console.log(fields)
+
   useEffect(() => {
     reset({
-      appartments: [
-        { firstName: { value: "firstName" }, lastName: { value: "lastName" } }
-      ]
+      appartments: state?.reducer?.selectedBuilding?.appartments
+      // appartments: [{
+      //   // _id: _id,
+      //   firstName: { value: "firstName" },
+      //   lastName: { value: "lastName" }
+      // }]
     });
   }, [reset]);
 
@@ -127,6 +133,7 @@ const AppartmentForm = (props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Field Array </h1>
       {fields.map((item, index) => {
+        console.log(item)
         return (
           <React.Fragment>
             <Accordion key={index}>
@@ -142,10 +149,17 @@ const AppartmentForm = (props) => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Input
-                  name={`appartments.${index}.firstName.value`}
+                {/* <Input
+                  name={`appartments.[${index}]._id`}
                   control={control}
                   label="Grandeur de l'appartement"
+                  defaultValue={item._id}
+                /> */}
+                <Input
+                  name={`appartments.[${index}][firstName]`}
+                  control={control}
+                  label="Grandeur de l'appartement"
+                  defaultValues={item?.firstName}
                 />
                 <Input
                   name={`appartments.${index}.lastName.value`}

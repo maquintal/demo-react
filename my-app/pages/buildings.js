@@ -72,7 +72,8 @@ const Buildings = () => {
           return (
             <Grid item xs={4} className={classes.cardWrapper} key={index}>
               <BuildingCard
-                building={building}
+                // building={building}
+                index={index}
                 classes={classes}
                 expanded={expanded}
                 handleExpandClick={handleExpandClick}
