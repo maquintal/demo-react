@@ -19,19 +19,25 @@ import {
   AccordionSummary,
   AccordionDetails,
   Badge,
-  Button
+  Button,
+  DialogActions,
 } from "@material-ui/core";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMoreOutlined";
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+
 import { makeStyles } from "@material-ui/core/styles";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedAppartment } from "../../store/rootSlice";
-import { useUpdateAppartmentsMutation } from "../../services/appartments"
+// import { useUpdateAppartmentsMutation } from "../../services/appartments"
+import { useUpdateAppartmentsMutation } from "../../services/buildingInfo"
 
 // CUSTOM
 import { Input } from "../../FormComponents/formComponents"
+import CustomizedSnackbars from "../../snackbar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,12 +49,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppartmentForm = ({index}) => {
-  console.log(index)
+const AppartmentForm = ({ index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const router = useRouter()
   const state = useSelector((state) => state);
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [severity, setSeverity] = React.useState("");
+  const [snackMessage, setSnackMessage] = React.useState("");
+
   const { data: post } = useUpdateAppartmentsMutation();
 
   const [
@@ -69,7 +79,20 @@ const AppartmentForm = ({index}) => {
     }
   );
 
-  // const onSubmit = (data) => console.log("data", data);
+  React.useEffect(() => {
+    // console.log(isUninitialized)
+    if (fulfilledTimeStamp && isSuccess) {
+      setSnackMessage("Record Updated"),
+        setSeverity("success")
+      // handleClose();
+    } else {
+      setSnackMessage(error?.error)
+      setSeverity("error")
+    }
+
+    setOpenSnackbar(!isUninitialized)
+
+  }, [fulfilledTimeStamp, error, isSuccess, isUninitialized])
 
   const handleSave = async (formData, isSuccess, isError, error) => {
     // try {
@@ -79,7 +102,6 @@ const AppartmentForm = ({index}) => {
     //   setSnackMessage(error)
     // }
 
-    console.log(formData)
     updateAppartments({
       selectedBuilding: state.reducer.selectedBuilding,
       appartmentsFormData: formData,
@@ -108,7 +130,6 @@ const AppartmentForm = ({index}) => {
     <form /* onSubmit={handleSubmit(onSubmit)} */>
       <h1>Field Array </h1>
       {fields.map((item, index) => {
-        console.log(item)
         return (
           <React.Fragment key={`fragment-${index}`}>
             <Accordion key={index}>
@@ -123,7 +144,7 @@ const AppartmentForm = ({index}) => {
                       name={`appartments.[${index}].app_number`}
                       control={control}
                       label="Appartement #"
-                      // rules={{ required: true }}
+                    // rules={{ required: true }}
                     />
                   </Badge>
                 </Typography>
@@ -133,16 +154,19 @@ const AppartmentForm = ({index}) => {
                   name={`appartments.[${index}].firstName`}
                   control={control}
                   label="Prénom"
-                  // rules={{ required: true }}
+                // rules={{ required: true }}
                 />
                 <Input
                   name={`appartments.[${index}].lastName`}
                   control={control}
                   label={"Nom"}
                 />
-                <button type="button" onClick={() => remove(index)}>
-                  Delete
-                </button>
+                <Button
+                  size="small"
+                  onClick={() => remove(index)}
+                >
+                  <DeleteIcon />
+                </Button>
 
               </AccordionDetails>
             </Accordion>
@@ -151,27 +175,35 @@ const AppartmentForm = ({index}) => {
         );
       })}
 
-      <button
-        type="button"
-        onClick={() => {
-          append({
-            // firstName: { value: "" },
-            // lastName: { value: "" }
-          });
-        }}
-      >
-        append
-      </button>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleSubmit(handleSave)}
-      >
-        {" "}
-        {/* {isLoading ? "Loading" : "Sauvegarder"} */}
-        {"Sauvegarder"}
-      </Button>
-      {/* <input type="submit" /> */}
+      <DialogActions>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            append({
+            });
+          }}
+        >
+          ajouter
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleSubmit(handleSave)}
+        >
+          {" "}
+          {isLoading ? "Loading" : "Sauvegarder"}
+          {/* {"Sauvegarder"} */}
+        </Button>
+      </DialogActions>
+      {(openSnackbar && (
+        <CustomizedSnackbars
+          opened={openSnackbar}
+          severity={severity}
+          message={snackMessage}
+        />
+      )) ||
+        null}
     </form>
 
   );

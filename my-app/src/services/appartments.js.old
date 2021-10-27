@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const appartmentsApi = createApi({
   reducerPath: 'appartmentsApi',
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api" }),
-  tagTypes: ['updateAppartments'],
+  tagTypes: [/*'updateAppartments', */ 'updateBuildingInfo'],
   endpoints: (build) => ({
     // getAllBuildings: build.query({
     //   query: () => `appartments/toBeCreate...`,
@@ -22,7 +22,9 @@ export const appartmentsApi = createApi({
           body,
         }
       },
-      invalidatesTags: ['updateAppartments']
+      // invalidatesTags: ['updateAppartments']
+      // invalidatesTags: ['updateBuildingInfo', 'updateAppartments']
+      invalidatesTags: ['updateBuildingInfo']
     }),
   }),
 })

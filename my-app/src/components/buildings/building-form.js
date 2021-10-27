@@ -41,6 +41,7 @@ export default function BuildingForm({ handleClose }) {
   const [severity, setSeverity] = React.useState("");
   const [snackMessage, setSnackMessage] = React.useState("");
   const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
+  
   const classes = useStyles();
 
   const { data: post } = useUpdateBuildingInfoMutation();

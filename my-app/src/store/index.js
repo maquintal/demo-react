@@ -2,18 +2,18 @@ import { configureStore } from "@reduxjs/toolkit"
 import { reducer } from "./rootSlice"
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { buildingInfoApi } from "../services/buildingInfo"
-import { appartmentsApi } from "../services/appartments"
+// import { appartmentsApi } from "../services/appartments"
 
 export const store = configureStore({
   reducer: {
     reducer,
     [buildingInfoApi.reducerPath]: buildingInfoApi.reducer,
-    [appartmentsApi.reducerPath]: appartmentsApi.reducer,
+    // [appartmentsApi.reducerPath]: appartmentsApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(buildingInfoApi.middleware).concat(appartmentsApi.middleware),
+    getDefaultMiddleware().concat(buildingInfoApi.middleware) //.concat(appartmentsApi.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
