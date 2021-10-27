@@ -9,7 +9,7 @@ export function Input({ control, name, label, type, rules, className }) {
   } = useController({
     name,
     control,
-    rules: {required: rules?.required},
+    // rules: {required: rules.required},
     defaultValue: "",
   });
 
@@ -26,7 +26,13 @@ export function Input({ control, name, label, type, rules, className }) {
    * 
    * */
 
-  const displayError = (isSubmitted && rules?.required !== false && inputProps.value === "") || false
+  // const displayError = (isSubmitted && rules?.required !== false && inputProps.value === "") || false
+  const displayError = (
+    rules !== undefined
+      ? isSubmitted && rules?.required !== false && inputProps.value === ""
+      : false
+    )
+  || false
   const displayHelperText = displayError ? `${inputProps.name} est requis` : ""
 
   return (
