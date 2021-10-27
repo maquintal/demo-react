@@ -17,6 +17,7 @@ const UpdateManyAppartments = async (req, res) => {
   // db.collection.updateOne(filter, update, options)
   
   const id = req?.body?.selectedBuilding?._id
+  const { appartments } = req.body.appartmentsFormData
   const objectId = new ObjectID(id);
 
   try {
@@ -25,7 +26,7 @@ const UpdateManyAppartments = async (req, res) => {
     .collection("tutorials")
     .updateMany(
       { _id: objectId },
-      { $set: { "appartments": req.body.appartmentsFormData } },
+      { $set: { "appartments": appartments } },
       { upsert: true }
     )
 

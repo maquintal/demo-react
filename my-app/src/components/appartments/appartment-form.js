@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppartmentForm = (props) => {
+const AppartmentForm = ({index}) => {
+  console.log(index)
   const classes = useStyles();
   const dispatch = useDispatch();
   const router = useRouter()
@@ -57,16 +58,9 @@ const AppartmentForm = (props) => {
 
   // const [value, setValue] = React.useState(0);
   const { control, handleSubmit, getValues, reset } = useForm({
-    // defaultValues: [{
-    //   app_number: "",
-    //   firstName: "",
-    //   lastName: "",
-    // }]
-
-    defaultValues: state?.reducer?.selectedBuilding?.appartments  
+    defaultValues: state?.reducer?.buildings[index]
   });
 
-  // console.log(control)
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
@@ -74,17 +68,6 @@ const AppartmentForm = (props) => {
       // keyName: "id", default to "id", you can change the key name
     }
   );
-
-  // useEffect(() => {
-  //   console.log(fields.length)
-  //   if(fields.length <= 0) {
-  //     append({input: 'text'})  
-  //   }
-  // }, [])
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   // const onSubmit = (data) => console.log("data", data);
 
@@ -104,23 +87,22 @@ const AppartmentForm = (props) => {
 
   };
 
-  // console.log(fields)
 
-  useEffect(() => {
-    reset({
-      // appartments: state?.reducer?.selectedBuilding?.appartments
-      // appartments: [{
-      //   // _id: _id,
-      //   firstName: { value: "firstName" },
-      //   lastName: { value: "lastName" }
-      // }]
-      appartments: [{
-        app_number: "",
-        firstName: "",
-        lastName: "",
-      }]
-    });
-  }, [reset]);
+  // useEffect(() => {
+  //   reset({
+  //     // appartments: state?.reducer?.buildings[1]
+  //     // appartments: [{
+  //     //   // _id: _id,
+  //     //   firstName: { value: "firstName" },
+  //     //   lastName: { value: "lastName" }
+  //     // }]
+  //     // appartments: [{
+  //     //   app_number: "",
+  //     //   firstName: "",
+  //     //   lastName: "",
+  //     // }]
+  //   });
+  // }, [reset]);
 
   return (
     <form /* onSubmit={handleSubmit(onSubmit)} */>
@@ -138,7 +120,7 @@ const AppartmentForm = (props) => {
                 <Typography component={'div'} className={classes.heading}>
                   <Badge badgeContent={4} color="primary" variant="dot">
                     <Input
-                      name={`appartments.${index}.app_number`}
+                      name={`appartments.[${index}].app_number`}
                       control={control}
                       label="Appartement #"
                       // rules={{ required: true }}
@@ -147,21 +129,16 @@ const AppartmentForm = (props) => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {/* <Input
-                  name={`appartments.[${index}]._id`}
-                  control={control}
-                  label="Grandeur de l'appartement"
-                  defaultValue={item._id}
-                /> */}
                 <Input
-                  name={`appartments.[${index}][firstName]`}
+                  name={`appartments.[${index}].firstName`}
                   control={control}
-                  label="Grandeur de l'appartement"
-                  defaultValues={item?.firstName}
+                  label="Prénom"
+                  // rules={{ required: true }}
                 />
                 <Input
-                  name={`appartments.${index}.lastName.value`}
+                  name={`appartments.[${index}].lastName`}
                   control={control}
+                  label={"Nom"}
                 />
                 <button type="button" onClick={() => remove(index)}>
                   Delete

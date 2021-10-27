@@ -178,7 +178,9 @@ const BuildingCard = ({ index, classes }) => {
         ======================================
         TO REFACTOR INTO COMPONENTS 
         ======================================*/}
-        <AppartmentForm />
+        <AppartmentForm
+          index={index}
+        />
       </AppartmentDialog>
 
       <ConfirmationDialog

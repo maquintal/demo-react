@@ -17,7 +17,7 @@ export const appartmentsApi = createApi({
         console.log(body)
 
         return {
-          url: `buildings/updateManyAppartments`,
+          url: `appartments/updateManyAppartments`,
           method: 'POST',
           body,
         }
