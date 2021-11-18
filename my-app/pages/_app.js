@@ -21,7 +21,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import MailIcon from "@material-ui/icons/Mail";
+import DescriptionIcon from '@material-ui/icons/Description';
 import BusinessIcon from '@material-ui/icons/Business';
 
 // REDUX
@@ -141,7 +143,7 @@ export default function MyApp(props) {
                 <MenuIcon />
               </IconButton>
                 <Typography onClick={() => router.push(`/`)} variant="h6" noWrap>
-                  Gestion GM
+                  Gestion Prona
                 </Typography>
             </Toolbar>
           </AppBar>
@@ -165,6 +167,7 @@ export default function MyApp(props) {
             </div>
             <Divider />
             <List>
+
               {["Buildings"].map((text, index) => (
                 <ListItem
                   button
@@ -180,7 +183,42 @@ export default function MyApp(props) {
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
-              ))}
+              ))},
+              
+              {["Corpiq"].map((text, index) => (
+                <ListItem
+                  button
+                  key={text}
+                  onClick={() => router.push(`/${text.toLocaleLowerCase()}`)}
+                >
+                  <ListItemIcon>
+                    {index % 2 === 0 ? (
+                      <FingerprintIcon color="primary" />
+                    ) : (
+                      <MailIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))},
+
+              {["Lease"].map((text, index) => (
+                <ListItem
+                  button
+                  key={text}
+                  onClick={() => router.push(`/${text.toLocaleLowerCase()}`)}
+                >
+                  <ListItemIcon>
+                    {index % 2 === 0 ? (
+                      <DescriptionIcon color="primary" />
+                    ) : (
+                      <MailIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))},
+
             </List>
           </Drawer>
           <main
