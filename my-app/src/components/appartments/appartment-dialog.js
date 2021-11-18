@@ -46,7 +46,7 @@ const AppartmentDialog = ({ title, children, openDialog, handleClose }) => {
             <DialogTitle>
               <div className={classes.headerWrapper}>
                 <Typography variant='h6'>
-                  Veillez choisir l'appartement désiré.
+                  Veuillez choisir l'appartement désiré.
                   </Typography>
                 <ActionButton color="secondary"  onClick={() => handleClose()}>
                   <CloseIcon fontSize="large" />

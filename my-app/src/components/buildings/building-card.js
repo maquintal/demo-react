@@ -174,10 +174,6 @@ const BuildingCard = ({ index, classes }) => {
         openDialog={openAppartmentDialog}
         handleClose={handleCloseAppartmentDialog}
       >
-        {/* 
-        ======================================
-        TO REFACTOR INTO COMPONENTS 
-        ======================================*/}
         <AppartmentForm
           index={index}
         />

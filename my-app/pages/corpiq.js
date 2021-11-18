@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -16,6 +16,9 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ActionButton from "../src/components/ActionButton";
+
+import CorpiqDialog from "../src/components/corpiq/Corpiq-dialog";
+import CorpiqForm from "../src/components/corpiq/Corpiq-form";
 
 const useRowStyles = makeStyles({
   root: {
@@ -147,13 +150,26 @@ const rows = [
 ];
 
 export default function Corpiq() {
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openCorpiqDialog, setOpenCorpiqDialog] = React.useState(false);
+  const handleCloseCorpiqDialog = () => {
+    setOpenCorpiqDialog(false);
+  };
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
   return (
     <>
-    <Grid container style={{marginBottom: 20}}>
+      <Grid container style={{ marginBottom: 20 }}>
         <Grid item xs={12}>
-            <ActionButton variant="outlined">Ajouter une enquête</ActionButton>
+          <ActionButton
+            variant="outlined"
+            onClick={() => setOpenCorpiqDialog(true)}
+          >
+            Ajouter une enquête
+          </ActionButton>
         </Grid>
-    </Grid>
+      </Grid>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
@@ -174,6 +190,15 @@ export default function Corpiq() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <CorpiqDialog
+        title={`test`}
+        openDialog={openCorpiqDialog}
+        handleClose={handleCloseCorpiqDialog}
+      >
+        <CorpiqForm handleClose={handleCloseCorpiqDialog}/>
+
+      </CorpiqDialog>
     </>
   );
 }
